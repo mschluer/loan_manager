@@ -1,6 +1,7 @@
 class PeopleController < ApplicationController
   before_action :redirect_to_index_if_not_logged_in
   before_action :set_person, only: [:show, :edit, :update, :destroy]
+  before_action :check_access_privilege, only: [:show, :edit, :update, :destroy]
 
   # GET /people
   # GET /people.json
@@ -63,13 +64,23 @@ class PeopleController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_person
-      @person = Person.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def person_params
-      params.require(:person).permit(:first_name, :last_name, :phone_number, :user_id)
+  # Use callbacks to share common setup or constraints between actions.
+  def set_person
+    @person = Person.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def person_params
+    params.require(:person).permit(:first_name, :last_name, :phone_number, :user_id)
+  end
+
+  def check_access_privilege
+    if @person.user != current_user
+      respond_to do |format|
+        format.html { redirect_to home_dashboard_path, notice: 'Person not accessible for this User' }
+        format.json { header :forbidden }
+      end
     end
+  end
 end
