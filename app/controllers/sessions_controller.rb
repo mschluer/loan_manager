@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
     respond_to do |format|
       if user && user.authenticate(session_params[:password])
         session[:user_id] = user.id
-        format.html { redirect_to root_url, notice: "Successfully logged in as ##{user.id} #{user.username}" }
+        format.html { redirect_to home_dashboard_path, notice: "Successfully logged in as ##{user.id} #{user.username}" }
         format.json { render :show, status: :ok, location: user }
       else
         format.html { render 'new', notice: 'Invalid Credentials.' }
@@ -23,7 +23,7 @@ class SessionsController < ApplicationController
     session[:user_id] = nil
 
     respond_to do |format|
-      format.html { redirect_to root_url, notice: 'Successfully signed off.' }
+      format.html { redirect_to home_index_path, notice: 'Successfully signed off.' }
       format.json { head :no_content }
     end
 
