@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  before_action :redirect_to_index_if_not_logged_in, only: [:destroy]
   # GET /login
   def new
   end
