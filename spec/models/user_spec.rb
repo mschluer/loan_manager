@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   # See spec/factories/user.rb
-  before :each do
+  before(:each) do
     @subject = create(:user)
   end
 
