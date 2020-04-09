@@ -29,6 +29,12 @@ RSpec.describe "/users", type: :request do
     }
   }
 
+  before(:each) do
+    # Create an Admin User and log in
+    @user = create(:user)
+    post '/sessions/create', params: { username: @user.username, password: @user.password }
+  end
+
   describe "GET /index" do
     it "renders a successful response" do
       User.create! valid_attributes

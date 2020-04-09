@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :payments
+  resources :loans
+  resources :people
   root 'home#index'
 
   # Resources
