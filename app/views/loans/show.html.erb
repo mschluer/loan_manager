@@ -30,7 +30,32 @@
   <%= @loan.person.user.username %>
 </p>
 
-<p></p>
+<p>
+  <strong>Remaining:</strong>
+  <%=  @loan.remaining_amount %>
+</p>
+
+<div class="space30px"></div>
+
+<h2>Account Statement</h2>
+
+<table>
+  <thead>
+    <tr>
+      <td>#</td>
+      <td>Amount</td>
+      <td>Description</td>
+      <td>Date</td>
+    </tr>
+  </thead>
+  <% @loan.payments.each_with_index do |payment, index| payment %>
+    <td><%= index + 1 %></td>
+    <td><%= payment.payment_amount %></td>
+    <td><%= payment.description %></td>
+    <td><%= payment.date %></td>
+  <% end %>
+</table>
+
 
 <%= link_to 'Edit', edit_loan_path(@loan) %> |
 <%= link_to 'Back', loans_path %>

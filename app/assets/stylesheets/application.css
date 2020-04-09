@@ -80,6 +80,10 @@ body {
     float: right;
 }
 
+.space30px {
+    min-height: 30px;
+}
+
 a:hover {
     background-color: gray;
     border-left: 1px solid white;
