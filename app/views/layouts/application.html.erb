@@ -16,6 +16,7 @@
         <% if current_user %>
           Logged in as <%= "##{current_user.id} #{current_user.username}" %>
           <%= link_to "Log Out", logout_path, class: 'toolbar-button' %>
+          <%= link_to "Payments", payments_path, class: 'toolbar-button' %>
           <%= link_to "Loans", loans_path, class: 'toolbar-button' %>
           <%= link_to "People", people_path, class: 'toolbar-button' %>
           <%= link_to "Dashboard", home_dashboard_path, class: 'toolbar-button' %>

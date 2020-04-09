@@ -4,4 +4,5 @@ class Loan < ApplicationRecord
   validates :date, presence: true
 
   belongs_to :person
+  has_many :payments
 end
