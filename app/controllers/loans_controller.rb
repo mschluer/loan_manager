@@ -5,7 +5,8 @@ class LoansController < ApplicationController
   # GET /loans
   # GET /loans.json
   def index
-    @loans = Loan.all
+    list_of_person_ids = Person.where(user_id: current_user).pluck(:id)
+    @loans = Loan.where(person_id: list_of_person_ids)
   end
 
   # GET /loans/1

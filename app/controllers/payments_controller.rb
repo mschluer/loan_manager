@@ -4,7 +4,9 @@ class PaymentsController < ApplicationController
   # GET /payments
   # GET /payments.json
   def index
-    @payments = Payment.all
+    list_of_person_ids = Person.where(user_id: current_user.id).pluck(:id)
+    list_of_loans_ids = Loan.where(user_id: list_of_person_ids).pluck(:id)
+    @payments = Payment.where(loan_id: list_of_loans_ids)
   end
 
   # GET /payments/1
