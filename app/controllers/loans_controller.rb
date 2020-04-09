@@ -1,5 +1,4 @@
 class LoansController < ApplicationController
-  before_action :redirect_to_index_if_not_logged_in
   before_action :set_loan, only: [:show, :edit, :update, :destroy]
   before_action :check_access_privilege, only: [:show, :edit, :update, :destroy]
 

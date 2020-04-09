@@ -1,12 +1,11 @@
 class PeopleController < ApplicationController
-  before_action :redirect_to_index_if_not_logged_in
   before_action :set_person, only: [:show, :edit, :update, :destroy]
   before_action :check_access_privilege, only: [:show, :edit, :update, :destroy]
 
   # GET /people
   # GET /people.json
   def index
-    @people = Person.all
+    @people = Person.where(user: current_user)
   end
 
   # GET /people/1
