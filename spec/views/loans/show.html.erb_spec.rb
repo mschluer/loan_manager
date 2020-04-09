@@ -25,5 +25,6 @@ RSpec.describe "loans/show", type: :view do
     expect(rendered).to match(/2020-04-09/)
     expect(rendered).to match(/#{@person.full_name}/)
     expect(rendered).to match(/#{@person.user.username}/)
+    expect(rendered).to match(/Account Statement/)
   end
 end

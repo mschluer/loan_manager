@@ -74,9 +74,15 @@ RSpec.describe "/users", type: :request do
         }.to change(User, :count).by(1)
       end
 
-      it "redirects to the created user" do
+      it "redirects back to the index upon user creation if user is logged out" do
+        get logout_url
         post users_url, params: { user: valid_attributes }
-        expect(response).to redirect_to(user_url(User.last))
+        expect(response).to redirect_to(home_index_path)
+      end
+
+      it "redirects to user/show upon user creation if user is logged in" do
+        post users_url, params: { user: valid_attributes }
+        expect(response).to redirect_to(user_url User.last)
       end
     end
 
