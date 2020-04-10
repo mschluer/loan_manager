@@ -84,7 +84,7 @@ body {
     min-height: 30px;
 }
 
-a:hover {
+.toolbar-button a:hover {
     background-color: gray;
     border-left: 1px solid white;
 }
