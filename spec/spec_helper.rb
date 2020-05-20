@@ -1,4 +1,5 @@
 require 'database_cleaner/active_record'
+require 'faker'
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
@@ -36,7 +37,8 @@ RSpec.configure do |config|
   config.before(:suite) do
     # See https://github.com/DatabaseCleaner/database_cleaner
     DatabaseCleaner.strategy = :transaction
-    DatabaseCleaner.clean_with(:truncation, except: %w(ar_internal_metadata))
+
+    Rails.application.load_seed
   end
 
   config.around(:each) do |example|

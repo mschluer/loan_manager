@@ -2,18 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Payment, type: :model do
   before(:each) do
-    @user = create(:user)
-
-    @person = build(:person)
-    @person.user = @user
-    @person.save
-
-    @loan = build(:loan)
-    @loan.person = @person
-    @loan.save
-
     @payment = build(:payment)
-    @payment.loan = @loan
+    @payment.loan_id = 1
   end
 
   it 'is valid with a complete dataset with positive payment_amount' do

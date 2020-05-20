@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :loan do
-    name { "Name" }
-    total_amount { 1.5 }
-    date { "2020-04-08" }
-    description { "Description" }
+    name { Faker::App.name }
+    total_amount { Faker::Number.decimal(l_digits: 2, r_digits: 2) }
+    date { Faker::Date.between(from: 2.weeks.ago, to: 1.week.ago) }
+    description { Faker::Lorem.paragraph }
   end
 end

@@ -1,9 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe "Sessions", type: :request do
-  before(:each) do
-    @user = create(:user)
-  end
 
   describe "GET /new" do
     it "returns http success" do
@@ -15,15 +12,15 @@ RSpec.describe "Sessions", type: :request do
 
   describe "GET /create" do
     it "returns http success" do
-      post '/sessions/create', params: { username: @user.username, password: @user.password }
+      post '/sessions/create', params: { username: 'Basic', password: '.test.' }
 
       expect(response).to redirect_to(home_dashboard_path)
 
-      expect(session[:user_id]).to eq @user.id
+      expect(session[:user_id]).to eq 3
     end
 
     it "redirects back if password is empty" do
-      post '/sessions/create', params: { username: @user.username, password: '' }
+      post '/sessions/create', params: { username: 'Basic', password: '' }
 
       expect(response).to be_successful
 
@@ -31,7 +28,7 @@ RSpec.describe "Sessions", type: :request do
     end
 
     it "redirects back if password is wrong" do
-      post '/sessions/create', params: { username: @user.username, password: 'wrong password' }
+      post '/sessions/create', params: { username: 'Basic', password: 'wrong password' }
 
       expect(response).to be_successful
 
@@ -41,8 +38,8 @@ RSpec.describe "Sessions", type: :request do
 
   describe "GET /destroy" do
     it "returns http success" do
-      post '/sessions/create', params: { username: @user.username, password: @user.password }
-      expect(session[:user_id]).to eq @user.id
+      post '/sessions/create', params: { username: 'Basic', password: '.test.' }
+      expect(session[:user_id]).to eq 3
 
       get "/logout"
 

@@ -14,12 +14,7 @@
 
 RSpec.describe "/loans", type: :request do
   before(:each) do
-    @user = create(:user)
-    post '/sessions/create', params: { username: @user.username, password: @user.password }
-
-    @person = build(:person)
-    @person.user = @user
-    @person.save
+    post '/sessions/create', params: { username: 'Basic', password: '.test.' }
   end
 
   let(:valid_attributes) { {
@@ -27,7 +22,7 @@ RSpec.describe "/loans", type: :request do
       total_amount: 5,
       date: '2020-04-08',
       description: 'Description',
-      person_id: @person.id
+      person_id: 2
     }
   }
 
@@ -106,7 +101,7 @@ RSpec.describe "/loans", type: :request do
           total_amount: '10',
           date: '2020-10-04',
           description: 'NewDescription',
-          person_id: @person.id
+          person_id: 2
         }
       }
 

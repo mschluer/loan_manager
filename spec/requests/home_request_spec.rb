@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe "Homes", type: :request do
   before(:each) do
-    @user = create(:user)
+    @user = User.find(3)
+    @user.password = '.test.'
   end
 
   describe "GET /index" do

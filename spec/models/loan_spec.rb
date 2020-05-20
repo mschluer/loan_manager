@@ -2,14 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Loan, type: :model do
   before(:each) do
-    @user = create(:user)
-
-    @person = build(:person)
-    @person.user = @user
-    @person.save
-
     @loan = build(:loan)
-    @loan.person = @person
+    @loan.person_id = 1
   end
 
   it 'is valid with a complete set of data and positive total amount' do

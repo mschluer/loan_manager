@@ -14,23 +14,14 @@
 
 RSpec.describe "/payments", type: :request do
   before(:each) do
-    @user = create(:user)
-    post '/sessions/create', params: { username: @user.username, password: @user.password }
-
-    @person = build(:person)
-    @person.user = @user
-    @person.save
-
-    @loan = build(:loan)
-    @loan.person = @person
-    @loan.save
+    post '/sessions/create', params: { username: 'Basic', password: '.test.' }
   end
 
   let(:valid_attributes) { {
       payment_amount: 5.0,
       date: '2020-04-09',
       description: 'payment_text',
-      loan_id: @loan.id
+      loan_id: 2
     }
   }
 
@@ -38,7 +29,7 @@ RSpec.describe "/payments", type: :request do
       payment_amount: nil,
       date: nil,
       description: nil,
-      loan_id: @loan.id
+      loan_id: 2
     }
   }
 
@@ -107,7 +98,7 @@ RSpec.describe "/payments", type: :request do
           payment_amount: -7.0,
           date: '2020-10-01',
           description: 'new_payment_text',
-          loan_id: @loan.id
+          loan_id: 2
         }
       }
 

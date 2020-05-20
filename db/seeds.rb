@@ -7,7 +7,7 @@ include FactoryBot::Syntax::Methods
 
 # Clear Database Upfront
 puts 'Wiping database'
-DatabaseCleaner.clean_with(:truncation)
+DatabaseCleaner.clean_with(:truncation, except: %w(ar_internal_metadata))
 puts 'Database wiped'
 
 # Users
