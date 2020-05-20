@@ -10,11 +10,6 @@ class HomeController < ApplicationController
   end
 
   def dashboard
-    if !current_user
-      respond_to do |format|
-        format.html { redirect_to home_index_path, notice: 'Please log in to view your Dashboard.'}
-        format.json { head :forbidden }
-      end
-    end
+    
   end
 end
