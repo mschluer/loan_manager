@@ -1,7 +1,14 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Dashboard</h1>
-<p>Current Outstanding Balance: <%= @current_outstanding_balance %></p>
+<p>
+  <% if @current_outstanding_balance < 0 %>
+    People owe you:
+  <% else %>
+    You owe people:
+  <% end %>
+  <%= @current_outstanding_balance.abs %>
+</p>
 
 <div class="space30px"></div>
 
