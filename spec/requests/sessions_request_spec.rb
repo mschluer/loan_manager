@@ -17,7 +17,25 @@ RSpec.describe "Sessions", type: :request do
     it "returns http success" do
       post '/sessions/create', params: { username: @user.username, password: @user.password }
 
+      expect(response).to redirect_to(home_dashboard_path)
+
       expect(session[:user_id]).to eq @user.id
+    end
+
+    it "redirects back if password is empty" do
+      post '/sessions/create', params: { username: @user.username, password: '' }
+
+      expect(response).to be_successful
+
+      expect(session[:user_id]).to be_nil
+    end
+
+    it "redirects back if password is wrong" do
+      post '/sessions/create', params: { username: @user.username, password: 'wrong password' }
+
+      expect(response).to be_successful
+
+      expect(session[:user_id]).to be_nil
     end
   end
 
