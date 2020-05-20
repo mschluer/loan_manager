@@ -2,15 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "payments/index", type: :view do
   before(:each) do
-    @user = create(:user)
-
-    @person = build(:person)
-    @person.user = @user
-    @person.save
-
-    @loan = build(:loan)
-    @loan.person = @person
-    @loan.save
+    @loan = create(:loan)
 
     assign(:payments, [
       Payment.create!(

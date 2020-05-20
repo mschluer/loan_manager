@@ -2,15 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "payments/show", type: :view do
   before(:each) do
-    @user = create(:user)
-
-    @person = build(:person)
-    @person.user = @user
-    @person.save
-
-    @loan = build(:loan)
-    @loan.person = @person
-    @loan.save
+    @loan = create(:loan)
 
     @payment = assign(:payment, Payment.create!(
       payment_amount: 2.5,
