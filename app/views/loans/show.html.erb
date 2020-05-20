@@ -58,6 +58,6 @@
   <% end %>
 </table>
 
-
+<%= link_to 'Add Payment', new_payment_path(loan_id: @loan) %> |
 <%= link_to 'Edit', edit_loan_path(@loan) %> |
 <%= link_to 'Back', loans_path %>

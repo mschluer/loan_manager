@@ -17,6 +17,8 @@ class PaymentsController < ApplicationController
   # GET /payments/new
   def new
     @payment = Payment.new
+    @payment.loan_id = params[:loan_id]
+
     list_of_person_ids = Person.where(user_id: current_user).pluck(:id)
     @list_of_loans = Loan.where(person_id: list_of_person_ids).order(:name)
   end
