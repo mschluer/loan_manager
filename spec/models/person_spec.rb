@@ -17,16 +17,16 @@ RSpec.describe Person, type: :model do
     expect(@person).not_to be_valid
   end
 
-  it 'is valid without a first name' do
+  it 'is invalid without a first name' do
     @person.first_name = nil
 
-    expect(@person).to be_valid
+    expect(@person).not_to be_valid
   end
 
-  it 'is valid without a last name' do
+  it 'is invalid without a last name' do
     @person.last_name = nil
 
-    expect(@person).to be_valid
+    expect(@person).not_to be_valid
   end
 
   it 'is valid without a phone number' do
