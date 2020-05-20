@@ -56,6 +56,6 @@ create(:payment, description: 'Third Rate', payment_amount: 20, loan_id: 1)
 create(:payment, description: 'Third Rate', payment_amount: 20, loan_id: 2)
 
 # Partially Paid Loan
-create(:payment, description: 'Partial Payment', payment_amount: 15, loan_id: 3)
-create(:payment, description: 'Partial Payment', payment_amount: 15, loan_id: 8)
+create(:payment, description: 'Partial Payment', payment_amount: 15, loan_id: 5)
+create(:payment, description: 'Partial Payment', payment_amount: 15, loan_id: 6)
 puts "#{Payment.count} payments created"
