@@ -47,17 +47,15 @@ puts "#{Loan.count} loans created"
 
 # Users -> People -> Loans -> Payments
 puts 'Creating Payments'
-2.times do
-  # Entirely Paid Loan
-  create(:payment, description: 'First Rate', payment_amount: 10, loan_id: 1)
-  create(:payment, description: 'First Rate', payment_amount: 10, loan_id: 6)
-  create(:payment, description: 'Second Rate', payment_amount: 20, loan_id: 1)
-  create(:payment, description: 'Second Rate', payment_amount: 20, loan_id: 6)
-  create(:payment, description: 'Third Rate', payment_amount: 30, loan_id: 1)
-  create(:payment, description: 'Third Rate', payment_amount: 30, loan_id: 6)
+# Entirely Paid Loan
+create(:payment, description: 'First Rate', payment_amount: 10, loan_id: 1)
+create(:payment, description: 'First Rate', payment_amount: 10, loan_id: 2)
+create(:payment, description: 'Second Rate', payment_amount: 20, loan_id: 1)
+create(:payment, description: 'Second Rate', payment_amount: 20, loan_id: 2)
+create(:payment, description: 'Third Rate', payment_amount: 20, loan_id: 1)
+create(:payment, description: 'Third Rate', payment_amount: 20, loan_id: 2)
 
-  # Partially Paid Loan
-  create(:payment, description: 'Partial Payment', payment_amount: 15, loan_id: 3)
-  create(:payment, description: 'Partial Payment', payment_amount: 15, loan_id: 8)
-end
+# Partially Paid Loan
+create(:payment, description: 'Partial Payment', payment_amount: 15, loan_id: 5)
+create(:payment, description: 'Partial Payment', payment_amount: 15, loan_id: 6)
 puts "#{Payment.count} payments created"
