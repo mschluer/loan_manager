@@ -1,7 +1,9 @@
 # Set the host name for URL creation
-SitemapGenerator::Sitemap.default_host = "http://www.example.com"
+SitemapGenerator::Sitemap.default_host = "http://www.loan-manager.dakalabs.com"
 
 SitemapGenerator::Sitemap.create do
+  add home_index_path
+  add session_new_path
   # Put links creation logic here.
   #
   # The root path '/' and sitemap index file are added automatically for you.
