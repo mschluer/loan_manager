@@ -17,7 +17,7 @@ RSpec.describe "/people", type: :request do
       first_name: 'FirstName',
       last_name: 'LastName',
       phone_number: '+49 170 1234 1234',
-      user_id: 1
+      user_id: 3
     }
   }
 
@@ -30,9 +30,7 @@ RSpec.describe "/people", type: :request do
   }
 
   before(:each) do
-    # Create an Admin User and log in
-    @user = create(:user)
-    post '/sessions/create', params: { username: @user.username, password: @user.password }
+    post '/sessions/create', params: { username: 'Basic', password: '.test.' }
   end
 
   describe "GET /index" do
@@ -100,7 +98,7 @@ RSpec.describe "/people", type: :request do
           first_name: 'NewFirstName',
           last_name: 'NewLastName',
           phone_number: '+49 175 4321 4321',
-          user_id: 1
+          user_id: 3
         }
       }
 
@@ -108,6 +106,8 @@ RSpec.describe "/people", type: :request do
         person = Person.create! valid_attributes
         patch person_url(person), params: { person: new_attributes }
         person.reload
+
+        # byebug
 
         expect(person.first_name).to eq 'NewFirstName'
         expect(person.last_name).to eq 'NewLastName'

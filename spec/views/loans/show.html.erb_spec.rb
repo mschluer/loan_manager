@@ -2,11 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "loans/show", type: :view do
   before(:each) do
-    @user = create(:user)
-
-    @person = build(:person)
-    @person.user = @user
-    @person.save
+    @person = create(:person)
 
     @loan = assign(:loan, Loan.create!(
         name: "MyString",
@@ -23,8 +19,8 @@ RSpec.describe "loans/show", type: :view do
     expect(rendered).to match(/2.5/)
     expect(rendered).to match(/MyText/)
     expect(rendered).to match(/2020-04-09/)
-    expect(rendered).to match(/#{@person.full_name}/)
-    expect(rendered).to match(/#{@person.user.username}/)
+    expect(rendered).to match(/#{ERB::Util.html_escape @person.full_name}/)
+    expect(rendered).to match(/#{ERB::Util.html_escape @person.user.username}/)
     expect(rendered).to match(/Account Statement/)
   end
 end

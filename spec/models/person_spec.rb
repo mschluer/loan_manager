@@ -2,9 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Person, type: :model do
   before(:each) do
-    @user = create(:user)
     @person = build(:person)
-    @person.user_id = @user.id
+    @person.user_id = 1
   end
 
   it 'is valid with a user' do

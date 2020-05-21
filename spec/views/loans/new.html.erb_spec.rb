@@ -2,11 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "loans/new", type: :view do
   before(:each) do
-    @user = create(:user)
-
-    @person = build(:person)
-    @person.user = @user
-    @person.save
+    @person = create(:person)
 
     @loan = assign(:loan, Loan.new(
         name: "MyString",

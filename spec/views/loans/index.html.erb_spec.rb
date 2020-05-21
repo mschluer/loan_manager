@@ -2,11 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "loans/index", type: :view do
   before(:each) do
-    @user = create(:user)
-
-    @person = build(:person)
-    @person.user = @user
-    @person.save
+    @person = create(:person)
 
     assign(:loans, [
       Loan.create!(
