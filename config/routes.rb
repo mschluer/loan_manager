@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'legal/disclaimer'
+  get 'legal/privacy'
+  get 'legal/legal_note'
   resources :payments
   resources :loans
   resources :people
