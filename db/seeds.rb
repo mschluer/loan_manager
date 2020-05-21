@@ -12,7 +12,7 @@ puts 'Database wiped'
 
 # Users
 puts 'Creating Users'
-create(:user, email: 'admin@loan-manager.com', username: 'Admin_User') # 1
+create(:user, email: 'admin@loan-manager.com', username: 'Admin_User', admin: true) # 1
 create(:user, email: 'premium@loan-manager.com', username: 'Premium') # 2
 create(:user, email: 'basic@loan-manager.com', username: 'Basic') # 3
 puts "#{User.count} users created"

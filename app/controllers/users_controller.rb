@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :redirect_to_dashboard_if_not_admin, only: [:index]
   skip_before_action :redirect_to_index_if_not_logged_in, only: [:new, :create]
 
   # GET /users

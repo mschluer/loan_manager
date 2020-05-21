@@ -34,10 +34,18 @@ RSpec.describe "/users", type: :request do
   end
 
   describe "GET /index" do
-    it "renders a successful response" do
+    it "renders a successful response if logged in as admin" do
+      get '/logout'
+      post '/sessions/create', params: { username: 'Admin_User', password: '.test.'}
+
       User.create! valid_attributes
       get users_url
       expect(response).to be_successful
+    end
+
+    it "does not render a successful response if user is not an admin" do
+      get users_url
+      expect(response).not_to be_successful
     end
   end
 
