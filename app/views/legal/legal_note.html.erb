@@ -1,2 +1,4 @@
-<h1>Legal#legal_note</h1>
-<p>Find me in app/views/legal/legal_note.html.erb</p>
+<h1>Legal note</h1>
+<% 5.times do %>
+  <p><%= Faker::Lorem.paragraph(sentence_count: 20) %></p>
+<% end %>
