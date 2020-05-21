@@ -24,6 +24,16 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  helper_method :redirect_to_dashboard_if_not_admin
+  def redirect_to_dashboard_if_not_admin
+    if !current_user.admin?
+      respond_to do |format|
+        format.html { redirect_to home_dashboard_path, notice: 'Permission denied.' }
+        format.json { header :forbidden }
+      end
+    end
+  end
+
   # Global Before Actions
   before_action :redirect_to_index_if_not_logged_in
 end
