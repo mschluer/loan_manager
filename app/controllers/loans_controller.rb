@@ -18,6 +18,7 @@ class LoansController < ApplicationController
   def new
     @loan = Loan.new
     @list_of_people = Person.where(user_id: current_user).order(:first_name)
+    @create = true
   end
 
   # GET /loans/1/edit
@@ -29,6 +30,10 @@ class LoansController < ApplicationController
   # POST /loans.json
   def create
     @loan = Loan.new(loan_params)
+
+    if params[:loan][:sign] == "negative"
+      @loan.total_amount *= -1
+    end
 
     respond_to do |format|
       if @loan.save
