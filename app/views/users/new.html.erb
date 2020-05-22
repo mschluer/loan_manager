@@ -1,9 +1,9 @@
-<% if current_user.nil? %>
-  <h1>Register</h1>
-<% else %>
+<% if @logged_in %>
   <h1>Create User</h1>
+<% else %>
+  <h1>Register</h1>
 <% end %>
 
 <%= render 'form', user: @user %>
 
-<%= link_to 'Back', users_path if !current_user.nil? %>
+<%= link_to 'Back', users_path if @logged_in %>
