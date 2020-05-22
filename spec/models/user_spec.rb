@@ -64,4 +64,16 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  it 'is possible to grant and revoke admin privileges' do
+    user = build(:user)
+
+    expect(user.admin?).to be false
+
+    user.switch_admin_access!
+    expect(user.admin?).to be true
+
+    user.switch_admin_access!
+    expect(user.admin?).to be false
+  end
 end

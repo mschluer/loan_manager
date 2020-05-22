@@ -5,4 +5,9 @@ class User < ApplicationRecord
   validates :username, presence: true, uniqueness: true
 
   has_many :people, foreign_key: 'user_id', class_name: 'Person', dependent: :destroy
+
+  def switch_admin_access!
+    self.admin = !self.admin
+    save!
+  end
 end
