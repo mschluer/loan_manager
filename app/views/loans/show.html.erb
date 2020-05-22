@@ -1,0 +1,63 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @loan.name %>
+</p>
+
+<p>
+  <strong>Total amount:</strong>
+  <%= @loan.total_amount %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @loan.date %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @loan.description %>
+</p>
+
+<p>
+  <strong>Person:</strong>
+  <%= @loan.person.full_name %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @loan.person.user.username %>
+</p>
+
+<p>
+  <strong>Balance:</strong>
+  <%=  @loan.balance %>
+</p>
+
+<div class="space30px"></div>
+
+<h2>Account Statement</h2>
+
+<table>
+  <thead>
+    <tr>
+      <td>#</td>
+      <td>Amount</td>
+      <td>Description</td>
+      <td>Date</td>
+    </tr>
+  </thead>
+  <% @loan.payments.each_with_index do |payment, index| payment %>
+    <tr>
+      <td><%= index + 1 %></td>
+      <td><%= payment.payment_amount %></td>
+      <td><%= link_to payment.description, payment %></td>
+      <td><%= payment.date %></td>
+    </tr>
+  <% end %>
+</table>
+
+<%= link_to 'Add Payment', new_payment_path(loan_id: @loan) %> |
+<%= link_to 'Edit Loan', edit_loan_path(@loan) %> |
+<%= link_to 'Loan Overview', loans_path %>

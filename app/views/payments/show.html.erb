@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Payment amount:</strong>
+  <%= @payment.payment_amount %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @payment.date %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @payment.description %>
+</p>
+
+<%= link_to 'Edit', edit_payment_path(@payment) %> |
+<%= link_to 'Delete', @payment, method: :delete, data: { confirm: 'Are you sure?' } %> |
+<%= link_to "Back to #{@payment.loan.name}", @payment.loan %>

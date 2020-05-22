@@ -1,0 +1,101 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Dashboard</h1>
+
+<div class="space30px"></div>
+
+<div id="summary_box">
+  <h3>Summary</h3>
+
+  <p>
+    <% if @current_outstanding_balance < 0 %>
+      People owe you:
+    <% else %>
+      You owe people:
+    <% end %>
+    <%= @current_outstanding_balance.abs %>
+  </p>
+
+  <div class="space30px"></div>
+
+  <p>Active Loans: <%= @active_loans_amount %></p>
+  <p>Paid Loans: <%= @paid_loans_amount %></p>
+
+</div>
+
+<div id="shortcut_box">
+  <h3>Shortcuts</h3>
+  <ul>
+    <li><%= link_to 'New Person', new_person_path %></li>
+    <li><%= link_to 'New Loan', new_loan_path %></li>
+    <li><%= link_to 'New Payment', new_payment_path %></li>
+  </ul>
+</div>
+
+<% if @active_loans_amount > 0 %>
+  <div class="space30px"></div>
+
+  <% if @active_and_negative_loans.size > 0 %>
+    <div class="active_loan_list">
+      <h3>Loans, somebody owe you (<%= @active_and_negative_loans.size %>)</h3>
+
+      <table>
+        <td>Loan</td>
+        <td>Balance</td>
+        <% @active_and_negative_loans.each do |loan| %>
+          <tr>
+            <td><%= link_to loan.name, loan %><%= " (#{loan.person.full_name})" %></td>
+            <td><%= loan.balance %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  <% end %>
+
+  <% if @active_and_positive_loans.size > 0 %>
+    <div class="active_loan_list">
+      <h3>Loans you owe somebody (<%= @active_and_positive_loans.size %>)</h3>
+
+      <table>
+        <tr>
+          <td>Loan</td>
+          <td>Balance</td>
+        </tr>
+        <% @active_and_positive_loans.each do |loan| %>
+          <tr>
+            <td><%= link_to loan.name, loan %><%= " (#{loan.person.full_name})" %></td>
+            <td><%= loan.balance %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  <% end %>
+
+<% end %>
+
+<div class="space30px"></div>
+
+<div id="most_recent_payments">
+  <h3>Most recent Payments</h3>
+
+  <table>
+    <thead>
+      <td>Date</td>
+      <td>Payment</td>
+      <td>Loan</td>
+    </thead>
+    <% @most_recent_payments.each do |payment| %>
+      <tr>
+        <td><%= payment.created_at.strftime('%a %d %b %y') %></td>
+        <td>
+          <% if payment.payment_amount > 0 %>
+            <%= "#{payment.loan.person.full_name} paid you #{payment.payment_amount}" %>
+          <% else %>
+            <%= "You paid #{payment.payment_amount} to #{payment.loan.person.full_name}" %>
+          <% end %>
+        </td>
+        <td><%= link_to payment.loan.name, payment.loan %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>

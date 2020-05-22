@@ -10,6 +10,34 @@
   </head>
 
   <body>
-    <%= yield %>
+    <div id="page-wrapper">
+      <div id="header">Loan-Manager</div>
+      <div id="toolbar">
+        <% if current_user %>
+          Logged in as <%= "##{current_user.id} #{current_user.username}" %>
+          <%= link_to "Log Out", logout_path, class: 'toolbar-button' %>
+          <%= link_to "Settings", settings_index_path, class: 'toolbar-button' %>
+          <%= link_to "Users", users_path, class: 'toolbar-button' if current_user.admin? %>
+          <%= link_to "People", people_path, class: 'toolbar-button' %>
+          <%= link_to "Dashboard", home_dashboard_path, class: 'toolbar-button' %>
+        <% else %>
+          <%= link_to "Sign Up", signup_path, class: 'toolbar-button' %>
+          <%= link_to "Log In", login_path, class: 'toolbar-button' %>
+        <% end %>
+      </div>
+
+      <div id="content">
+        <%= yield %>
+      </div>
+      <div id="pre-footer">
+        Loan Manager was created with Ruby on Rails.
+        <br><%= link_to 'Sitemap', '/sitemap.xml.gz' %>
+      </div>
+      <div id="footer">
+        <p class="toolbar-button"><%= link_to 'Legal Note', legal_legal_note_path %></p>
+        <p class="toolbar-button"><%= link_to 'Privacy', legal_privacy_path %></p>
+        <p class="toolbar-button"><%= link_to 'Disclaimer', legal_disclaimer_path %></p>
+      </div>
+    </div>
   </body>
 </html>

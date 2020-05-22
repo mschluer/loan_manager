@@ -13,3 +13,79 @@
  *= require_tree .
  *= require_self
  */
+
+body {
+    background-image: url('background.jpg');
+    background-position: initial;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+#page-wrapper {
+    padding: 20px;
+
+    background-color: antiquewhite;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+
+    width: 1000px;
+}
+
+#header {
+    padding-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-family: "American Typewriter";
+    font-size: 40px;
+
+    margin-bottom: 50px;
+}
+
+#toolbar {
+    overflow: hidden;
+
+    margin-bottom: 40px;
+    border-bottom: 1px solid gray;
+}
+
+#content {
+    min-height: 500px;
+    padding: 30px;
+}
+
+#pre-footer {
+    margin-top: 40px;
+    text-align: center;
+}
+
+#footer {
+    overflow: hidden;
+
+    margin-top: 40px;
+    padding-top: 0px;
+    border-top: 1px solid gray;
+}
+
+.toolbar-button {
+    display: inline-block;
+    width: 100px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+    border-left: 1px solid gray;
+    margin-top: 0px;
+    margin-right: 10px;
+    float: right;
+}
+
+.space30px {
+    min-height: 30px;
+    clear:both;
+}
+
+.toolbar-button a:hover {
+    background-color: gray;
+    border-left: 1px solid white;
+}

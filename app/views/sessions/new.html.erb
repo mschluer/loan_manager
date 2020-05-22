@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Login</h1>
+<p>Login to Loan Manager</p>
+
+
+<%= form_tag sessions_create_path, method: 'post' %>
+  <div class="field">
+    <%= label_tag 'Username' %>
+    <%= text_field_tag :username %>
+  </div>
+
+  <div class="field">
+    <%= label_tag 'Password' %>
+    <%= password_field_tag :password %>
+  </div>
+
+  <div class="actions">
+    <%= submit_tag 'Submit' %>
+  </div>

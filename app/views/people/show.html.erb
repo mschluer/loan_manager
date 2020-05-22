@@ -1,0 +1,48 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>First name:</strong>
+  <%= @person.first_name %>
+</p>
+
+<p>
+  <strong>Last name:</strong>
+  <%= @person.last_name %>
+</p>
+
+<p>
+  <strong>Phone number:</strong>
+  <%= @person.phone_number %>
+</p>
+
+<p>
+  <strong>Originator:</strong>
+  <%= @person.user.username %>
+</p>
+
+<% if @person.loans.size > 0 %>
+  <div class="space30px"></div>
+
+  <h3>User Loans</h3>
+
+  <table>
+    <tr>
+      <td>Loan</td>
+      <td>Total</td>
+      <td>Balance</td>
+    </tr>
+    <% @person.loans.each do |loan| %>
+      <tr>
+        <td><%= link_to loan.name, @loan %></td>
+        <td><%= loan.total_amount %></td>
+        <td><%= loan.balance %></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <div class="space30px"></div>
+<% end %>
+
+<%= link_to 'Create Loan', new_loan_path(person_id: @person.id) %> |
+<%= link_to 'Edit', edit_person_path(@person) %> |
+<%= link_to 'Back', people_path %>
