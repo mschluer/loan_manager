@@ -5,6 +5,13 @@
 <div class="space30px"></div>
 
 <h3>General</h3>
-<ul><%= link_to 'Change Account Data', edit_user_path(current_user) %></ul>
-<ul><%= link_to 'Edit Loans', loans_path %></ul>
-<ul><%= link_to 'Edit Payments', payments_path %></ul>
+<ul>
+<li><%= link_to 'Change Account Data', edit_user_path(current_user) %></li>
+<li><%= link_to 'Edit Loans', loans_path %></li>
+<li><%= link_to 'Edit Payments', payments_path %></li>
+</ul>
+
+<h3>Danger-Section</h3>
+<ul>
+  <li><%= link_to 'Delete Account', current_user, method: :delete, data: { confirm: 'Are you sure that you want to delete your account and all your data?' } %></li>
+</ul>
