@@ -18,7 +18,9 @@ class LoansController < ApplicationController
   def new
     @loan = Loan.new
     @list_of_people = Person.where(user_id: current_user).order(:first_name)
+
     @create = true
+    @loan.person_id = params[:person_id] unless params[:person_id].nil?
   end
 
   # GET /loans/1/edit

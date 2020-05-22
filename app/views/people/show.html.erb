@@ -20,5 +20,6 @@
   <%= @person.user.username %>
 </p>
 
+<%= link_to 'Create Loan', new_loan_path(person_id: @person.id) %> |
 <%= link_to 'Edit', edit_person_path(@person) %> |
 <%= link_to 'Back', people_path %>
