@@ -1,24 +1,31 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a small Rails tool which I use to keep track of whom I owe and who owes me money at the moment.
 
-Things you may want to cover:
+### Ruby Version
 
-* Ruby version
+Loan manager makes use of Ruby v.2.6.3.
 
-* System dependencies
+### Dependencies & Explanation
 
-* Configuration
+In addition to the regular Dependencies a Rails application comes with, Loan Manager makes use of the following gems:
+* sitemap_generator (SEO; showcase)
+* byebug (Debugger)
+* rspec-rails (as replacement for minitest)
+* factory_bot_rails (to generate fixtures on the fly)
+* faker (to generate random fake data if needed)
+* database_cleaner-active_record (to speeden up the tests by rolling back database changes after each spec)
 
-* Database creation
+### Usage
 
-* Database initialization
+To use the loan manager, just create an account by signing up. Afterwards you may log in with the credentials you used.
 
-* How to run the test suite
+If there's need for an Admin account, open the console and run the following:
 
-* Services (job queues, cache servers, search engines, etc.)
+```User.find(<your user id>).switch_admin_access!```
 
-* Deployment instructions
+### Tests
 
-* ...
+The test suite can be run via
+
+```bundle exec rspec```
