@@ -3,7 +3,11 @@
 // You can use Sass (SCSS) here: https://sass-lang.com/
 
 #summary_box {
+  float:left;
+}
 
+#shortcut_box {
+  float:right;
 }
 
 .active_loan_list {

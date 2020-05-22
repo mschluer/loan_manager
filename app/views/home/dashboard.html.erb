@@ -4,9 +4,9 @@
 
 <div class="space30px"></div>
 
-<h3>Summary</h3>
+<div id="summary_box">
+  <h3>Summary</h3>
 
-  <div id="summary_box">
   <p>
     <% if @current_outstanding_balance < 0 %>
       People owe you:
@@ -23,6 +23,15 @@
 
 </div>
 
+<div id="shortcut_box">
+  <h3>Shortcuts</h3>
+  <ul>
+    <li><%= link_to 'New Loan', new_loan_path %></li>
+    <li><%= link_to 'New Person', new_person_path %></li>
+    <li><%= link_to 'New Payment', new_payment_path %></li>
+  </ul>
+</div>
+
 <% if @active_loans_amount > 0 %>
   <div class="space30px"></div>
 
@@ -35,7 +44,7 @@
         <td>Balance</td>
         <% @active_and_negative_loans.each do |loan| %>
           <tr>
-            <td><%= link_to loan.name, loan %></td>
+            <td><%= link_to loan.name, loan %><%= " (#{loan.person.full_name})" %></td>
             <td><%= loan.balance %></td>
           </tr>
         <% end %>
@@ -54,7 +63,7 @@
         </tr>
         <% @active_and_positive_loans.each do |loan| %>
           <tr>
-            <td><%= link_to loan.name, loan %></td>
+            <td><%= link_to loan.name, loan %><%= " (#{loan.person.full_name})" %></td>
             <td><%= loan.balance %></td>
           </tr>
         <% end %>
