@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   get 'settings/index'
-  get 'settings/change_password'
   get 'legal/disclaimer'
   get 'legal/privacy'
   get 'legal/legal_note'
