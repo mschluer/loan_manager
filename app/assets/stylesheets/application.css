@@ -82,6 +82,7 @@ body {
 
 .space30px {
     min-height: 30px;
+    clear:both;
 }
 
 .toolbar-button a:hover {

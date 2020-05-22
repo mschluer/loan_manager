@@ -14,21 +14,21 @@ class HomeController < ApplicationController
     @loans = Loan.where(person_id: @people)
 
     @current_outstanding_balance = 0
-    @active_and_negative_loans_amount = 0
-    @active_and_positive_loans_amount = 0
+    @active_and_negative_loans = []
+    @active_and_positive_loans = []
 
     @loans.each do |loan|
       if loan.balance != 0
         @current_outstanding_balance += loan.balance
         if loan.balance > 0
-          @active_and_positive_loans_amount += 1
+          @active_and_positive_loans.unshift loan
         else
-          @active_and_negative_loans_amount += 1
+          @active_and_negative_loans.unshift loan
         end
       end
     end
 
-    @active_loans_amount = @active_and_negative_loans_amount + @active_and_positive_loans_amount
+    @active_loans_amount = @active_and_negative_loans.size + @active_and_positive_loans.size
     @paid_loans_amount = @loans.count - @active_loans_amount
 
     @most_recent_payments = Payment.where(loan_id: @loans).limit(10).order(id: :desc)
