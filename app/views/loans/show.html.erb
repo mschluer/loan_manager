@@ -52,7 +52,7 @@
     <tr>
       <td><%= index + 1 %></td>
       <td><%= payment.payment_amount %></td>
-      <td><%= payment.description %></td>
+      <td><%= link_to payment.description, payment %></td>
       <td><%= payment.date %></td>
     </tr>
   <% end %>
