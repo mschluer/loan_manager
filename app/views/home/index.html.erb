@@ -1,4 +1,28 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<h1>Start Page</h1>
+
+Welcome to Loan Manager. Create an Account or Log in to an existing one with the controls in the top right hand corner.
+
+<div id="#logged_out_statistics">
+  <h3>Statistics</h3>
+
+  <table>
+    <tr>
+      <td># of Users</td>
+      <td><%= @number_of_users %></td>
+    </tr>
+    <tr>
+      <td># of People</td>
+      <td><%= @number_of_people %></td>
+    </tr>
+    <tr>
+      <td># of Loans</td>
+      <td><%= @number_of_loans %></td>
+    </tr>
+    <tr>
+      <td># of Payments</td>
+      <td><%= @number_of_payments %></td>
+    </tr>
+  </table>
+</div>
