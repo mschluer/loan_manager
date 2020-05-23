@@ -37,8 +37,10 @@ group :development, :test do
 
   gem 'rspec-rails'
   gem 'factory_bot_rails'
-  gem 'faker'
 end
+
+# Has to go to development & test as soon as legal pages contain actual data - currently filled by fake data
+gem 'faker'
 
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.

@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  loan_manager:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      RAILS_ENV: 'production'
+      RAILS_SERVE_STATIC_FILES: 'true'
+    ports:
+      - '80:80'
+    container_name: loan_manager
