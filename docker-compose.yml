@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  loan_manager:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      RAILS_ENV: 'production'
+      RAILS_SERVE_STATIC_FILES: 'true'
+    ports:
+      - '80:80'
+    container_name: loan_manager
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: 'loan_manager_db'
+      MYSQL_USER: 'loan_manager_user'
+      MYSQL_PASSWORD: 'l04n_mgR!'
+      MYSQL_RANDOM_ROOT_PASSWORD: 'true'
+    volumes:
+      - loan_manager_db:/var/lib/mysql
+    container_name: loan_manager_database
+
+volumes:
+  loan_manager_db:

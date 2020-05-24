@@ -7,6 +7,11 @@ class HomeController < ApplicationController
         format.json { head :no_content }
       end
     end
+
+    @number_of_users = User.count
+    @number_of_people = Person.count
+    @number_of_loans = Loan.count
+    @number_of_payments = Payment.count
   end
 
   def dashboard

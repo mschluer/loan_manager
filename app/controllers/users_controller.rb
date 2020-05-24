@@ -17,6 +17,7 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
+    @logged_in = !current_user.nil?
   end
 
   # GET /users/1/edit
