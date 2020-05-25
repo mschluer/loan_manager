@@ -31,7 +31,10 @@
 
   <div class="field">
     <%= form.label :loan %>
-    <%= form.collection_select :loan_id, @list_of_loans, :id, :name%>
+    <%= form.collection_select :loan_id, @list_of_loans, :id, :name, disabled: true if params[:loan_id].nil? %>
+    <% if !params[:loan_id].nil? %>
+      <%= "#{@selected_loan.name} (Balance: #{@selected_loan.balance})" %>
+    <% end %>
   </div>
 
   <div class="actions">

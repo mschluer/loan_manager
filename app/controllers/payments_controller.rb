@@ -21,6 +21,14 @@ class PaymentsController < ApplicationController
 
     list_of_person_ids = Person.where(user_id: current_user).pluck(:id)
     @list_of_loans = Loan.where(person_id: list_of_person_ids).order(:name)
+
+    if !params[:loan_id].nil?
+      @selected_loan = Loan.find(params[:loan_id])
+
+      if @selected_loan.person.user_id != current_user.id
+        @selected_loan = @list_of_loans.first
+      end
+    end
   end
 
   # GET /payments/1/edit
