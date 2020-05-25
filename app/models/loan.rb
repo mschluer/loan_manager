@@ -15,4 +15,12 @@ class Loan < ApplicationRecord
 
     result
   end
+
+  def days_open
+    if balance != 0
+      DateTime.now.mjd - self.date.mjd
+    else
+      self.payments.last.date.mjd - self.date.mjd
+    end
+  end
 end
