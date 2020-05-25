@@ -21,6 +21,11 @@
 </p>
 
 <% if @person.loans.size > 0 %>
+  <p>
+    <strong>Average Days per Loan:</strong>
+    <%= @person.average_loan_duration_days %>
+  </p>
+
   <div class="space30px"></div>
 
   <h3>User Loans</h3>
@@ -33,7 +38,7 @@
     </tr>
     <% @person.loans.each do |loan| %>
       <tr>
-        <td><%= link_to loan.name, @loan %></td>
+        <td><%= link_to loan.name, loan %></td>
         <td><%= loan.total_amount %></td>
         <td><%= loan.balance %></td>
       </tr>

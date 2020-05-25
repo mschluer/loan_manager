@@ -13,4 +13,16 @@ class Person < ApplicationRecord
   def id_with_full_name
     "##{id} #{full_name}"
   end
+
+  def average_loan_duration_days
+    if (loans_size = loans.size) == 0
+      -1
+    else
+      total = 0
+      loans.each do |loan|
+        total += loan.days_open
+      end
+      total / loans_size
+    end
+  end
 end
