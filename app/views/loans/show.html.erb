@@ -35,6 +35,11 @@
   <%=  @loan.balance %>
 </p>
 
+<p>
+  <strong><%= @loan.balance > 0 ? "Open Since:" : "Open for:"%></strong>
+  <%= "#{@loan.days_open} days" %>
+</p>
+
 <div class="space30px"></div>
 
 <h2>Account Statement</h2>
