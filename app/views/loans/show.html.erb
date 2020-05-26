@@ -64,5 +64,6 @@
 </table>
 
 <%= link_to 'Add Payment', new_payment_path(loan_id: @loan) %> |
+<%= link_to 'Schedule Payment', new_scheduled_payment_path(loan_id: @loan) %> |
 <%= link_to 'Edit Loan', edit_loan_path(@loan) %> |
 <%= link_to 'Loan Overview', loans_path %>

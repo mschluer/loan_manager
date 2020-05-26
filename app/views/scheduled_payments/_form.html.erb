@@ -1,3 +1,6 @@
+<% # Fallback %>
+<% @list_of_loans ||= [ Loan.new ] %>
+
 <%= form_with(model: scheduled_payment, local: true) do |form| %>
   <% if scheduled_payment.errors.any? %>
     <div id="error_explanation">
@@ -18,17 +21,22 @@
 
   <div class="field">
     <%= form.label :date %>
-    <%= form.text_field :date %>
+    <%= form.date_select :date %>
   </div>
 
   <div class="field">
     <%= form.label :description %>
-    <%= form.text_field :description %>
+    <%= form.text_area :description %>
   </div>
 
   <div class="field">
     <%= form.label :loan_id %>
-    <%= form.number_field :loan_id %>
+    <% if !params[:loan_id].nil? %>
+      <%= form.hidden_field :loan_id %>
+      <%= "#{@selected_loan.name} (Balance: #{@selected_loan.balance})" %>
+    <% else %>
+      <%= form.collection_select :loan_id, @list_of_loans, :id, :name %>
+    <% end %>
   </div>
 
   <div class="actions">

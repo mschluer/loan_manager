@@ -4,7 +4,9 @@ class ScheduledPaymentsController < ApplicationController
   # GET /scheduled_payments
   # GET /scheduled_payments.json
   def index
-    @scheduled_payments = ScheduledPayment.all
+    list_of_person_ids = Person.where(user_id: current_user).pluck(:id)
+    list_of_loan_ids = Loan.where(person_id: list_of_person_ids).pluck(:id)
+    @scheduled_payments = ScheduledPayment.where(loan_id: list_of_loan_ids)
   end
 
   # GET /scheduled_payments/1
@@ -15,10 +17,24 @@ class ScheduledPaymentsController < ApplicationController
   # GET /scheduled_payments/new
   def new
     @scheduled_payment = ScheduledPayment.new
+    @scheduled_payment.loan_id = params[:loan_id]
+
+    list_of_person_ids = Person.where(user_id: current_user).pluck(:id)
+    @list_of_loans = Loan.where(person_id: list_of_person_ids).order(:name)
+
+    if !params[:loan_id].nil?
+      @selected_loan = @list_of_loans.detect { |loan| String(loan.id) == params[:loan_id] }
+
+      if @selected_loan.nil?
+        @selected_loan = @list_of_loans.first
+      end
+    end
   end
 
   # GET /scheduled_payments/1/edit
   def edit
+    list_of_person_ids = Person.where(user_id: current_user).pluck(:id)
+    @list_of_loans = Loan.where(person_id: list_of_person_ids).order(:name)
   end
 
   # POST /scheduled_payments
