@@ -31,7 +31,7 @@
 
   <div class="field">
     <%= form.label :loan_id %>
-    <% if !params[:loan_id].nil? %>
+    <% if !@selected_loan.nil? %>
       <%= form.hidden_field :loan_id %>
       <%= "#{@selected_loan.name} (Balance: #{@selected_loan.balance})" %>
     <% else %>

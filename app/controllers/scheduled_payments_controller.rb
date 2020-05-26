@@ -1,5 +1,5 @@
 class ScheduledPaymentsController < ApplicationController
-  before_action :set_scheduled_payment, only: [:show, :edit, :update, :destroy]
+  before_action :set_scheduled_payment, only: [:show, :edit, :update, :destroy, :check, :check_confirm]
 
   # GET /scheduled_payments
   # GET /scheduled_payments.json
@@ -74,6 +74,36 @@ class ScheduledPaymentsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to scheduled_payments_url, notice: 'Scheduled payment was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  # GET /scheduled_payments/1/check
+  def check
+    set_scheduled_payment
+
+    @selected_loan = @scheduled_payment.loan
+  end
+
+  # POST /scheduled_payments/1/check_confirm
+  def check_confirm
+    @payment = Payment.new(scheduled_payment_params)
+
+    respond_to do |format|
+      if @payment.loan.person.user != current_user
+        # Check Permission
+        format.html { redirect_to home_dashboard_path, notice: 'Permission denied.' }
+        format.json { head :forbidden }
+      else
+        if @payment.save
+          format.html { redirect_to home_dashboard_path, notice: 'Scheduled payment checked - Payment created.' }
+          format.json { render show, status: :ok, location: @payment }
+
+          @scheduled_payment.destroy
+        else
+          format.html { render :check }
+          format.json { render json: @payment.errors, status: :unprocessable_entity }
+        end
+      end
     end
   end
 
