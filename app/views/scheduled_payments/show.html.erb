@@ -21,4 +21,5 @@
 </p>
 
 <%= link_to 'Edit', edit_scheduled_payment_path(@scheduled_payment) %> |
-<%= link_to 'Back', scheduled_payments_path %>
+<%= link_to 'Back', scheduled_payments_path %> |
+<%= link_to "Back to #{@scheduled_payment.loan.name}", @scheduled_payment.loan %>
