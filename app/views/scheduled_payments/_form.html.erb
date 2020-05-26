@@ -1,0 +1,37 @@
+<%= form_with(model: scheduled_payment, local: true) do |form| %>
+  <% if scheduled_payment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(scheduled_payment.errors.count, "error") %> prohibited this scheduled_payment from being saved:</h2>
+
+      <ul>
+        <% scheduled_payment.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :payment_amount %>
+    <%= form.text_field :payment_amount %>
+  </div>
+
+  <div class="field">
+    <%= form.label :date %>
+    <%= form.text_field :date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_field :description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :loan_id %>
+    <%= form.number_field :loan_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

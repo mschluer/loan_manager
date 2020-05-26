@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :scheduled_payments
   get 'settings/index'
   get 'legal/disclaimer'
   get 'legal/privacy'

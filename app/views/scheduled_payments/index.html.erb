@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Scheduled Payments</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Payment amount</th>
+      <th>Date</th>
+      <th>Description</th>
+      <th>Loan</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @scheduled_payments.each do |scheduled_payment| %>
+      <tr>
+        <td><%= scheduled_payment.payment_amount %></td>
+        <td><%= scheduled_payment.date %></td>
+        <td><%= scheduled_payment.description %></td>
+        <td><%= scheduled_payment.loan_id %></td>
+        <td><%= link_to 'Show', scheduled_payment %></td>
+        <td><%= link_to 'Edit', edit_scheduled_payment_path(scheduled_payment) %></td>
+        <td><%= link_to 'Destroy', scheduled_payment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Scheduled Payment', new_scheduled_payment_path %>
