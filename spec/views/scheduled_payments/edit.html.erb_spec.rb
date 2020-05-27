@@ -19,11 +19,7 @@ RSpec.describe "scheduled_payments/edit", type: :view do
 
       assert_select "input[name=?]", "scheduled_payment[payment_amount]"
 
-      assert_select "input[name=?]", "scheduled_payment[date]"
-
-      assert_select "input[name=?]", "scheduled_payment[description]"
-
-      assert_select "input[name=?]", "scheduled_payment[loan_id]"
+      assert_select "textarea[name=?]", "scheduled_payment[description]"
     end
   end
 end
