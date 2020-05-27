@@ -80,8 +80,6 @@ class ScheduledPaymentsController < ApplicationController
   # GET /scheduled_payments/1/check
   def check
     set_scheduled_payment
-
-    @selected_loan = @scheduled_payment.loan
   end
 
   # POST /scheduled_payments/1/check_confirm

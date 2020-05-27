@@ -16,10 +16,13 @@ RSpec.describe "scheduled_payments/edit", type: :view do
     render
 
     assert_select "form[action=?][method=?]", scheduled_payment_path(@scheduled_payment), "post" do
+      assert_select 'input[name=?]', 'scheduled_payment[payment_amount]'
 
-      assert_select "input[name=?]", "scheduled_payment[payment_amount]"
+      assert_select 'select[id=?]', 'scheduled_payment_date_1i'
+      assert_select 'select[id=?]', 'scheduled_payment_date_2i'
+      assert_select 'select[id=?]', 'scheduled_payment_date_3i'
 
-      assert_select "textarea[name=?]", "scheduled_payment[description]"
+      assert_select 'textarea[name=?]', 'scheduled_payment[description]'
     end
   end
 end

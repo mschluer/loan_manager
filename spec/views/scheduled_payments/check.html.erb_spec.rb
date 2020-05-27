@@ -1,19 +1,14 @@
 require 'rails_helper'
 
-RSpec.describe "scheduled_payments/new", type: :view do
+RSpec.describe "scheduled_payments/check", type: :view do
   before(:each) do
-    assign(:scheduled_payment, ScheduledPayment.new(
-      payment_amount: 1.5,
-      date: "2021-01-01",
-      description: "Scheduled Payment Text",
-      loan_id: 1
-    ))
+     @scheduled_payment = assign(:scheduled_payment, create(:scheduled_payment))
   end
 
-  it "renders new scheduled_payment form" do
+  it 'renders the check scheduled payment form' do
     render
 
-    assert_select "form[action=?][method=?]", scheduled_payments_path, "post" do
+    assert_select 'form[action=?][method=?]', check_confirm_scheduled_payment_path(@scheduled_payment), 'post' do
       assert_select 'input[name=?]', 'scheduled_payment[payment_amount]'
 
       assert_select 'select[id=?]', 'scheduled_payment_date_1i'

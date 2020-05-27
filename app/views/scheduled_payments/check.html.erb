@@ -1,6 +1,6 @@
 <h1>Check Scheduled Payment</h1>
 
-<%= form_with(model: @scheduled_payment, local: true, url: check_confirm_scheduled_payment_path, method: :post) do |form| %>
+<%= form_with(model: @scheduled_payment, local: true, url: check_confirm_scheduled_payment_path(@scheduled_payment), method: :post) do |form| %>
   <p id="notice"><%= notice %></p>
 
   <div class="field">
@@ -21,7 +21,7 @@
   <div class="field">
     <%= form.label :loan_id %>
     <%= form.hidden_field :loan_id %>
-    <%= "#{@selected_loan.name} (Balance: #{@selected_loan.balance})" %>
+    <%= "#{@scheduled_payment.loan.name} (Balance: #{@scheduled_payment.loan.balance})" %>
   </div>
 
   <div class="actions">
