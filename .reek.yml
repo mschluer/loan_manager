@@ -1,0 +1,46 @@
+detectors:
+  DuplicateMethodCall:
+    enabled: false
+  # Comments explaining purpose of classes must not be necessary
+  IrresponsibleModule:
+    enabled: false
+  MissingSafeMethod:
+    exclude:
+      - User
+  NilCheck:
+    # safe navigation is syntactic sugar which does not have to be enforced
+    # and makes the code harder to read for people not familiar with ruby
+    enabled: false
+
+directories:
+  "app/controllers":
+    IrresponsibleModule:
+      enabled: false
+    NestedIterators:
+      max_allowed_nesting: 2
+    UnusedPrivateMethod:
+      enabled: false
+    InstanceVariableAssumption:
+      enabled: false
+    TooManyInstanceVariables:
+      enabled: false
+    TooManyStatements:
+      enabled: false
+  "app/helpers":
+    IrresponsibleModule:
+      enabled: false
+    UtilityFunction:
+      enabled: false
+  "app/mailers":
+    InstanceVariableAssumption:
+      enabled: false
+  "app/models":
+    InstanceVariableAssumption:
+      enabled: false
+  "db/migrate":
+    FeatureEnvy:
+      enabled: false
+    TooManyStatements:
+      enabled: false
+    UncommunicativeVariableName:
+      enabled: false
