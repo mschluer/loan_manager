@@ -5,6 +5,7 @@ class Loan < ApplicationRecord
 
   belongs_to :person
   has_many :payments
+  has_many :scheduled_payments
 
   def balance
     result = total_amount

@@ -1,0 +1,38 @@
+<h1>Check Scheduled Payment</h1>
+
+<%= form_with(model: @scheduled_payment, local: true, url: check_confirm_scheduled_payment_path(@scheduled_payment), method: :post) do |form| %>
+  <p id="notice"><%= notice %></p>
+
+  <div class="field">
+    <%= form.label :payment_amount %>
+    <%= form.text_field :payment_amount %>
+  </div>
+
+  <div class="field">
+    <%= form.label :date %>
+    <%= form.date_select :date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :loan_id %>
+    <%= form.hidden_field :loan_id %>
+    <%= "#{@scheduled_payment.loan.name} (Balance: #{@scheduled_payment.loan.balance})" %>
+  </div>
+
+  <div class="actions">
+    <% if params[:action] == 'check' %>
+      <%= form.submit value: 'Accept Payment' %>
+    <% else %>
+      <%= form.submit %>
+    <% end %>
+  </div>
+<% end %>
+
+<%= link_to 'Show', @scheduled_payment %> |
+<%= link_to 'Back', scheduled_payments_path %> |
+<%= link_to "Back to #{@scheduled_payment.loan.name}", @scheduled_payment.loan %>

@@ -19,7 +19,7 @@ puts "#{User.count} users created"
 
 # Users -> People
 puts 'Creating People'
-first_names = %w(Steven Mike Laura)
+first_names = %w(Steven Mike Laura Martin)
 first_names.each do |first_name|
   create(:person, first_name: first_name, last_name: 'Premium', user_id: 2) # Uneven Numbers: Premium
   create(:person, first_name: first_name, last_name: 'Basic', user_id: 3) # Even Numbers: Basic
@@ -43,6 +43,10 @@ create(:loan, name: 'Small Loan 1', total_amount: -10, person_id: 5) # 7
 create(:loan, name: 'Small Loan 1', total_amount: -10, person_id: 6) # 8
 create(:loan, name: 'Small Loan 2', total_amount: -20, person_id: 5) # 9
 create(:loan, name: 'Small Loan 2', total_amount: -20, person_id: 6) # 10
+
+# Martin
+create(:loan, name: 'Loan with Scheduled Payments', total_amount: -50, person_id: 7) # 11
+create(:loan, name: 'Loan with Scheduled Payments', total_amount: -50, person_id: 8) # 12
 puts "#{Loan.count} loans created"
 
 # Users -> People -> Loans -> Payments
@@ -59,3 +63,11 @@ create(:payment, description: 'Third Rate', payment_amount: 20, loan_id: 2)
 create(:payment, description: 'Partial Payment', payment_amount: 15, loan_id: 5)
 create(:payment, description: 'Partial Payment', payment_amount: 15, loan_id: 6)
 puts "#{Payment.count} payments created"
+
+# Users -> People -> Loans -> Scheduled Payments
+puts 'Creating Scheduled Payments'
+(1...5).each do |i|
+  create(:scheduled_payment, description: "Scheduled Rate ##{i}", date: i.months.from_now, payment_amount: 10, loan_id: 11) # Uneven: Premium
+  create(:scheduled_payment, description: "Scheduled Rate ##{i}", date: i.months.from_now,payment_amount: 10, loan_id: 12) # Even: Basic
+end
+puts "#{ScheduledPayment.count} scheduled payments created"

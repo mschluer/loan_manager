@@ -37,5 +37,6 @@ class HomeController < ApplicationController
     @paid_loans_amount = @loans.count - @active_loans_amount
 
     @most_recent_payments = Payment.where(loan_id: @loans).limit(10).order(id: :desc)
+    @upcoming_payments = ScheduledPayment.where(loan_id: @loans).limit(10).order(date: :asc)
   end
 end
