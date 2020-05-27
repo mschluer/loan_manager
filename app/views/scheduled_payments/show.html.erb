@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Payment amount:</strong>
+  <%= @scheduled_payment.payment_amount %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @scheduled_payment.date %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @scheduled_payment.description %>
+</p>
+
+<p>
+  <strong>Loan:</strong>
+  <%= @scheduled_payment.loan_id %>
+</p>
+
+<%= link_to 'Edit', edit_scheduled_payment_path(@scheduled_payment) %> |
+<%= link_to 'Back', scheduled_payments_path %> |
+<%= link_to "Back to #{@scheduled_payment.loan.name}", @scheduled_payment.loan %>

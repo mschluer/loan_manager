@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources :scheduled_payments do
+    get 'check', on: :member
+    post 'check_confirm', on: :member
+  end
   get 'settings/index'
   get 'legal/disclaimer'
   get 'legal/privacy'

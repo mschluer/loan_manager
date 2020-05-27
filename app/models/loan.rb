@@ -5,6 +5,7 @@ class Loan < ApplicationRecord
 
   belongs_to :person
   has_many :payments
+  has_many :scheduled_payments
 
   def balance
     result = total_amount
@@ -14,5 +15,13 @@ class Loan < ApplicationRecord
     end
 
     result
+  end
+
+  def days_open
+    if balance != 0
+      DateTime.now.mjd - self.date.mjd
+    else
+      self.payments.last.date.mjd - self.date.mjd
+    end
   end
 end

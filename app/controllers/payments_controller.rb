@@ -4,7 +4,7 @@ class PaymentsController < ApplicationController
   # GET /payments
   # GET /payments.json
   def index
-    list_of_person_ids = Person.where(user_id: current_user.id).pluck(:id)
+    list_of_person_ids = Person.where(user_id: current_user).pluck(:id)
     list_of_loans_ids = Loan.where(person_id: list_of_person_ids).pluck(:id)
     @payments = Payment.where(loan_id: list_of_loans_ids)
   end
@@ -21,6 +21,14 @@ class PaymentsController < ApplicationController
 
     list_of_person_ids = Person.where(user_id: current_user).pluck(:id)
     @list_of_loans = Loan.where(person_id: list_of_person_ids).order(:name)
+
+    if !params[:loan_id].nil?
+      @selected_loan = @list_of_loans.detect { |loan| String(loan.id) == params[:loan_id] }
+
+      if @selected_loan.nil?
+        @selected_loan = @list_of_loans.first
+      end
+    end
   end
 
   # GET /payments/1/edit

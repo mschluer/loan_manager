@@ -1,13 +1,13 @@
 <% # Fallback %>
 <% @list_of_loans ||= [ Loan.new ] %>
 
-<%= form_with(model: payment, local: true) do |form| %>
-  <% if payment.errors.any? %>
+<%= form_with(model: scheduled_payment, local: true) do |form| %>
+  <% if scheduled_payment.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(payment.errors.count, "error") %> prohibited this payment from being saved:</h2>
+      <h2><%= pluralize(scheduled_payment.errors.count, "error") %> prohibited this scheduled_payment from being saved:</h2>
 
       <ul>
-        <% payment.errors.full_messages.each do |message| %>
+        <% scheduled_payment.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
       </ul>
