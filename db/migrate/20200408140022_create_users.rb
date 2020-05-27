@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# This creates the first version of the users table
 class CreateUsers < ActiveRecord::Migration[6.0]
   def change
     create_table :users do |t|

@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :redirect_to_dashboard_if_not_admin, only: [:index]
-  skip_before_action :redirect_to_index_if_not_logged_in, only: [:new, :create]
+  before_action :set_user, only: %i[show edit update destroy]
+  before_action :redirect_to_dashboard_if_not_admin, only: %i[index]
+  skip_before_action :redirect_to_index_if_not_logged_in, only: %i[new create]
 
   # GET /users
   # GET /users.json
@@ -11,8 +13,7 @@ class UsersController < ApplicationController
 
   # GET /users/1
   # GET /users/1.json
-  def show
-  end
+  def show; end
 
   # GET /users/new
   def new
@@ -21,8 +22,7 @@ class UsersController < ApplicationController
   end
 
   # GET /users/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /users
   # POST /users.json
@@ -31,7 +31,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        if current_user
+        if !current_user.nil?
           format.html { redirect_to @user, notice: 'User was successfully created.' }
           format.json { render :show, status: :ok, location: @user }
         else
@@ -70,13 +70,13 @@ class UsersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def user_params
-      params.require(:user).permit(:email, :username, :password, :password_confirmation)
-    end
+  def set_user
+    @user = User.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def user_params
+    params.require(:user).permit(:email, :username, :password, :password_confirmation)
+  end
 end

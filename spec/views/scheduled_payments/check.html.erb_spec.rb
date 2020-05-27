@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "scheduled_payments/check", type: :view do
+RSpec.describe 'scheduled_payments/check', type: :view do
   before(:each) do
-     @scheduled_payment = assign(:scheduled_payment, create(:scheduled_payment))
+    @scheduled_payment = assign(:scheduled_payment, create(:scheduled_payment))
   end
 
   it 'renders the check scheduled payment form' do

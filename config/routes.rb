@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   resources :scheduled_payments do
     get 'check', on: :member
@@ -14,7 +16,7 @@ Rails.application.routes.draw do
 
   # Resources
   resources :users
-  resources :sessions, only: [:new, :create, :destroy]
+  resources :sessions, only: %i[new create destroy]
 
   # Home Controller
   get 'home/index'

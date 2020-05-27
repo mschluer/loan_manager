@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Person < ApplicationRecord
   belongs_to :user
   has_many :loans
@@ -15,7 +17,7 @@ class Person < ApplicationRecord
   end
 
   def average_loan_duration_days
-    if (loans_size = loans.size) == 0
+    if (loans_size = loans.size).zero?
       -1
     else
       total = 0

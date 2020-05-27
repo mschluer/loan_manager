@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class HomeController < ApplicationController
   skip_before_action :redirect_to_index_if_not_logged_in, only: :index
   def index
@@ -23,13 +25,13 @@ class HomeController < ApplicationController
     @active_and_positive_loans = []
 
     @loans.each do |loan|
-      if loan.balance != 0
-        @current_outstanding_balance += loan.balance
-        if loan.balance > 0
-          @active_and_positive_loans.unshift loan
-        else
-          @active_and_negative_loans.unshift loan
-        end
+      next if loan.balance != 0
+
+      @current_outstanding_balance += loan.balance
+      if loan.balance.positive?
+        @active_and_positive_loans.unshift loan
+      else
+        @active_and_negative_loans.unshift loan
       end
     end
 

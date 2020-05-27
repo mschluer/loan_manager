@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :scheduled_payment do
     payment_amount { Faker::Number.decimal(l_digits: 1, r_digits: 2) }
