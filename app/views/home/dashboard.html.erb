@@ -32,6 +32,33 @@
   </ul>
 </div>
 
+<% if @upcoming_payments.size > 0 %>
+  <div class="space30px"></div>
+
+  <h3>Upcoming Payments</h3>
+  <div id="upcoming_payments_list">
+    <table>
+      <tr>
+        <td>Date</td>
+        <td>Due</td>
+        <td>Loan</td>
+        <td>Description</td>
+        <td>Amount</td>
+      </tr>
+      <% @upcoming_payments.each do |scheduled_payment| %>
+        <tr>
+          <td><%= scheduled_payment.date %></td>
+          <td><%= scheduled_payment.due_string %></td>
+          <td><%= "#{scheduled_payment.loan.name} (#{scheduled_payment.loan.person.full_name})" %></td>
+          <td><%= scheduled_payment.description %></td>
+          <td><%= scheduled_payment.payment_amount %></td>
+          <td><%= link_to 'Check', check_scheduled_payment_path(scheduled_payment) %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+<% end %>
+
 <% if @active_loans_amount > 0 %>
   <div class="space30px"></div>
 

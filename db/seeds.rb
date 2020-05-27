@@ -67,7 +67,7 @@ puts "#{Payment.count} payments created"
 # Users -> People -> Loans -> Scheduled Payments
 puts 'Creating Scheduled Payments'
 (1...5).each do |i|
-  create(:scheduled_payment, description: "Scheduled Rate ##{i}", payment_amount: 10, loan_id: 11) # Uneven: Premium
-  create(:scheduled_payment, description: "Scheduled Rate ##{i}", payment_amount: 10, loan_id: 12) # Even: Basic
+  create(:scheduled_payment, description: "Scheduled Rate ##{i}", date: i.months.from_now, payment_amount: 10, loan_id: 11) # Uneven: Premium
+  create(:scheduled_payment, description: "Scheduled Rate ##{i}", date: i.months.from_now,payment_amount: 10, loan_id: 12) # Even: Basic
 end
 puts "#{ScheduledPayment.count} scheduled payments created"

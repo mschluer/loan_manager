@@ -59,7 +59,7 @@
       <td><%= scheduled_payment.payment_amount %></td>
       <td><%= link_to scheduled_payment.description, scheduled_payment %></td>
       <td><%= scheduled_payment.date %></td>
-      <td><%= DateTime.now < scheduled_payment.date ? "In #{scheduled_payment.date.mjd - DateTime.now.mjd} Days" : "Since #{DateTime.now.mjd - scheduled_payment.date.mjd} Days" %></td>
+      <td><%= scheduled_payment.due_string %></td>
       <td><%= link_to 'Check', check_scheduled_payment_path(scheduled_payment) %></td>
     </tr>
   <% end %>
