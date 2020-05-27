@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class ScheduledPaymentsController < ApplicationController
-  before_action :set_scheduled_payment, only: [:show, :edit, :update, :destroy, :check, :check_confirm]
+  before_action :set_scheduled_payment, only: %i[show edit update destroy check check_confirm]
 
   # GET /scheduled_payments
   # GET /scheduled_payments.json
@@ -11,8 +13,7 @@ class ScheduledPaymentsController < ApplicationController
 
   # GET /scheduled_payments/1
   # GET /scheduled_payments/1.json
-  def show
-  end
+  def show; end
 
   # GET /scheduled_payments/new
   def new
@@ -22,13 +23,11 @@ class ScheduledPaymentsController < ApplicationController
     list_of_person_ids = Person.where(user_id: current_user).pluck(:id)
     @list_of_loans = Loan.where(person_id: list_of_person_ids).order(:name)
 
-    if !params[:loan_id].nil?
-      @selected_loan = @list_of_loans.detect { |loan| String(loan.id) == params[:loan_id] }
+    return unless params[:loan_id].nil?
 
-      if @selected_loan.nil?
-        @selected_loan = @list_of_loans.first
-      end
-    end
+    @selected_loan = @list_of_loans.detect { |loan| String(loan.id) == params[:loan_id] }
+
+    @selected_loan = @list_of_loans.first if @selected_loan.nil?
   end
 
   # GET /scheduled_payments/1/edit
@@ -78,9 +77,7 @@ class ScheduledPaymentsController < ApplicationController
   end
 
   # GET /scheduled_payments/1/check
-  def check
-    set_scheduled_payment
-  end
+  def check; end
 
   # POST /scheduled_payments/1/check_confirm
   def check_confirm
@@ -91,28 +88,26 @@ class ScheduledPaymentsController < ApplicationController
         # Check Permission
         format.html { redirect_to home_dashboard_path, notice: 'Permission denied.' }
         format.json { head :forbidden }
-      else
-        if @payment.save
-          format.html { redirect_to home_dashboard_path, notice: 'Scheduled payment checked - Payment created.' }
-          format.json { render show, status: :ok, location: @payment }
+      elsif @payment.save
+        format.html { redirect_to home_dashboard_path, notice: 'Scheduled payment checked - Payment created.' }
+        format.json { render show, status: :ok, location: @payment }
 
-          @scheduled_payment.destroy
-        else
-          format.html { render :check }
-          format.json { render json: @payment.errors, status: :unprocessable_entity }
-        end
+        @scheduled_payment.destroy
+      else
+        format.html { render :check }
+        format.json { render json: @payment.errors, status: :unprocessable_entity }
       end
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_scheduled_payment
-      @scheduled_payment = ScheduledPayment.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def scheduled_payment_params
-      params.require(:scheduled_payment).permit(:payment_amount, :date, :description, :loan_id)
-    end
+  def set_scheduled_payment
+    @scheduled_payment = ScheduledPayment.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def scheduled_payment_params
+    params.require(:scheduled_payment).permit(:payment_amount, :date, :description, :loan_id)
+  end
 end

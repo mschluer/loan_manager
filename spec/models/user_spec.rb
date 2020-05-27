@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
@@ -23,9 +25,9 @@ RSpec.describe User, type: :model do
         expect(@subject).to be_valid
 
         second_user = User.new(
-            email: @subject.email,
-            username: '_test_user',
-            password: 'valid_password'
+          email: @subject.email,
+          username: '_test_user',
+          password: 'valid_password'
         )
 
         expect(second_user).not_to be_valid
@@ -45,9 +47,9 @@ RSpec.describe User, type: :model do
         expect(@subject).to be_valid
 
         second_user = User.new(
-            email: '_test_user@loan-manager.com',
-            username: @subject.username,
-            password: 'valid_password'
+          email: '_test_user@loan-manager.com',
+          username: @subject.username,
+          password: 'valid_password'
         )
 
         expect(second_user).not_to be_valid
@@ -66,7 +68,7 @@ RSpec.describe User, type: :model do
   end
 
   it 'is possible to grant and revoke admin privileges' do
-    user = build(:user)
+    user = create(:user)
 
     expect(user.admin?).to be false
 

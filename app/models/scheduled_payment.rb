@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ScheduledPayment < ApplicationRecord
   validates :payment_amount, presence: true
   validates :date, presence: true

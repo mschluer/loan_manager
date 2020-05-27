@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 # Set the host name for URL creation
-SitemapGenerator::Sitemap.default_host = "http://www.loan-manager.dakalabs.com"
+SitemapGenerator::Sitemap.default_host = 'http://www.loan-manager.dakalabs.com'
 
 SitemapGenerator::Sitemap.create do
   add home_index_path

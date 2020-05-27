@@ -1,0 +1,48 @@
+AllCops:
+  Exclude:
+    # The bundle file is of no concern for linting
+    - 'bin/bundle'
+    # Third party libraries do not have to be checked
+    - 'node_modules/**/*'
+
+Metrics/AbcSize:
+  Exclude:
+    # Exclude controllers to avoid spill-over of complexity
+    - 'app/controllers/*.rb'
+
+Metrics/BlockLength:
+  Exclude:
+    # Excessive Block length is allowed in test files
+    - 'spec/**/*'
+    - 'db/schema.rb'
+
+Metrics/LineLength:
+  Max: 120
+
+Metrics/MethodLength:
+  Max: 30
+
+Style/Documentation:
+  Enabled: false
+
+Style/MixinUsage:
+  Exclude:
+    # TODO: Seeder has to become on own Module once application becomes more complex
+    - 'db/seeds.rb'
+
+# unless is syntactic sugar which does not have to be enforced
+Style/NegatedIf:
+  Enabled: false
+
+Style/NumericLiterals:
+  Exclude:
+    - 'db/schema.rb'
+
+# safe navigation is syntactic sugar which does not have to be enforced
+# and makes the code harder to read for people not familiar with ruby
+Style/SafeNavigation:
+  Enabled: false
+
+Style/StringLiterals:
+  Exclude:
+    - 'db/schema.rb'

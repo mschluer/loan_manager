@@ -1,4 +1,6 @@
-abort("The Rails environment is running in production mode!") if Rails.env.production?
+# frozen_string_literal: true
+
+abort('The Rails environment is running in production mode!') if Rails.env.production?
 
 require 'database_cleaner'
 require 'factory_bot'
@@ -7,7 +9,7 @@ include FactoryBot::Syntax::Methods
 
 # Clear Database Upfront
 puts 'Wiping database'
-DatabaseCleaner.clean_with(:truncation, except: %w(ar_internal_metadata))
+DatabaseCleaner.clean_with(:truncation, except: %w[ar_internal_metadata])
 puts 'Database wiped'
 
 # Users
@@ -19,7 +21,7 @@ puts "#{User.count} users created"
 
 # Users -> People
 puts 'Creating People'
-first_names = %w(Steven Mike Laura Martin)
+first_names = %w[Steven Mike Laura Martin]
 first_names.each do |first_name|
   create(:person, first_name: first_name, last_name: 'Premium', user_id: 2) # Uneven Numbers: Premium
   create(:person, first_name: first_name, last_name: 'Basic', user_id: 3) # Even Numbers: Basic
@@ -67,7 +69,15 @@ puts "#{Payment.count} payments created"
 # Users -> People -> Loans -> Scheduled Payments
 puts 'Creating Scheduled Payments'
 (1...5).each do |i|
-  create(:scheduled_payment, description: "Scheduled Rate ##{i}", date: i.months.from_now, payment_amount: 10, loan_id: 11) # Uneven: Premium
-  create(:scheduled_payment, description: "Scheduled Rate ##{i}", date: i.months.from_now,payment_amount: 10, loan_id: 12) # Even: Basic
+  create(:scheduled_payment,
+         description: "Scheduled Rate ##{i}",
+         date: i.months.from_now,
+         payment_amount: 10,
+         loan_id: 11) # Uneven: Premium
+  create(:scheduled_payment,
+         description: "Scheduled Rate ##{i}",
+         date: i.months.from_now,
+         payment_amount: 10,
+         loan_id: 12) # Even: Basic
 end
 puts "#{ScheduledPayment.count} scheduled payments created"

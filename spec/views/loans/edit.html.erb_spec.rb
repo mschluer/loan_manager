@@ -1,28 +1,19 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "loans/edit", type: :view do
+RSpec.describe 'loans/edit', type: :view do
   before(:each) do
-    @person = create(:person)
-
-    @loan = assign(:loan, Loan.create!(
-      name: "MyString",
-      total_amount: 1.5,
-      description: "MyText",
-      date: '2020-04-09',
-      person_id: @person.id
-    ))
+    @loan = assign(:loan, create(:loan))
   end
 
-  it "renders the edit loan form" do
+  it 'renders the edit loan form' do
     render
 
-    assert_select "form[action=?][method=?]", loan_path(@loan), "post" do
-
-      assert_select "input[name=?]", "loan[name]"
-
-      assert_select "input[name=?]", "loan[total_amount]"
-
-      assert_select "textarea[name=?]", "loan[description]"
+    assert_select 'form[action=?][method=?]', loan_path(@loan), 'post' do
+      assert_select 'input[name=?]', 'loan[name]'
+      assert_select 'input[name=?]', 'loan[total_amount]'
+      assert_select 'textarea[name=?]', 'loan[description]'
     end
   end
 end
