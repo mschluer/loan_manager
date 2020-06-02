@@ -25,7 +25,7 @@ class HomeController < ApplicationController
     @active_and_positive_loans = []
 
     @loans.each do |loan|
-      next if loan.balance != 0
+      next if loan.balance == 0
 
       @current_outstanding_balance += loan.balance
       if loan.balance.positive?
