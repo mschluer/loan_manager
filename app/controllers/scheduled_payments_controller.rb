@@ -101,7 +101,7 @@ class ScheduledPaymentsController < ApplicationController
 
   # GET /scheduled_payments/overdues
   def overdues
-    @scheduled_payments = fetch_scheduled_payments.select { |element| element.overdue? }
+    @scheduled_payments = fetch_scheduled_payments.select(&:overdue?)
 
     respond_to do |format|
       format.html { render :overdues }

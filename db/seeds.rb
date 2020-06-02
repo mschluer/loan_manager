@@ -7,7 +7,7 @@ require 'factory_bot'
 
 include FactoryBot::Syntax::Methods
 
-# TODO remove after fix is available
+# TODO: remove after fix is available
 puts '⚠️ fsevent error is to be fixed in TPL and does not interfere with seeding' if Rails.env.development?
 
 # Clear Database Upfront

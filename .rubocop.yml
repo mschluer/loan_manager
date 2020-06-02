@@ -9,6 +9,7 @@ Metrics/AbcSize:
   Exclude:
     # Exclude controllers to avoid spill-over of complexity
     - 'app/controllers/*.rb'
+  Max: 20
 
 Metrics/BlockLength:
   Exclude:
