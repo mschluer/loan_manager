@@ -1,0 +1,27 @@
+<h1>Overdue Scheduled Payments</h1>
+
+<% if @scheduled_payments.size < 1 %>
+  <p>No scheduled payments to show. Back to <%= link_to 'Dashboard', home_dashboard_path %></p>
+<% else %>
+  <table>
+    <tr>
+      <td>Date</td>
+      <td>Due</td>
+      <td>Loan</td>
+      <td>Description</td>
+      <td>Amount</td>
+    </tr>
+    <% @scheduled_payments.each do |scheduled_payment| %>
+      <tr>
+        <td><%= scheduled_payment.date %></td>
+        <td><%= scheduled_payment.due_string %></td>
+        <td><%= "#{scheduled_payment.loan.name} (#{scheduled_payment.loan.person.full_name})" %></td>
+        <td><%= scheduled_payment.description %></td>
+        <td><%= scheduled_payment.payment_amount %></td>
+        <td><%= link_to 'Check', check_scheduled_payment_path(scheduled_payment) %></td>
+        <td><%= link_to 'Edit', edit_scheduled_payment_path(scheduled_payment) %></td>
+        <td><%= link_to 'Delete', scheduled_payment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>

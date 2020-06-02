@@ -37,6 +37,12 @@
 
   <h3>Upcoming Payments</h3>
   <div id="upcoming_payments_list">
+    <% if @overdue_upcoming_payments.size > 0 %>
+      <p><%= link_to pluralize(@overdue_upcoming_payments.size,
+                               'scheduled payment is overdue!',
+                               plural: 'scheduled payments are overdue'), scheduled_payments_overdues_path %></p>
+    <% end %>
+
     <table>
       <tr>
         <td>Date</td>
@@ -64,7 +70,7 @@
 
   <% if @active_and_negative_loans.size > 0 %>
     <div class="active_loan_list">
-      <h3>Loans, somebody owe you (<%= @active_and_negative_loans.size %>)</h3>
+      <h3>Loans, somebody owes you (<%= @active_and_negative_loans.size %>)</h3>
 
       <table>
         <td>Loan</td>

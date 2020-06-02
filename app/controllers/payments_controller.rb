@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 class PaymentsController < ApplicationController
-  before_action :set_payment, only: [:show, :edit, :update, :destroy]
+  before_action :set_payment, only: %i[show edit update destroy]
+  before_action :check_access_privilege, only: %i[show edit update destroy]
 
   # GET /payments
   # GET /payments.json
@@ -11,8 +14,7 @@ class PaymentsController < ApplicationController
 
   # GET /payments/1
   # GET /payments/1.json
-  def show
-  end
+  def show; end
 
   # GET /payments/new
   def new
@@ -22,13 +24,11 @@ class PaymentsController < ApplicationController
     list_of_person_ids = Person.where(user_id: current_user).pluck(:id)
     @list_of_loans = Loan.where(person_id: list_of_person_ids).order(:name)
 
-    if !params[:loan_id].nil?
-      @selected_loan = @list_of_loans.detect { |loan| String(loan.id) == params[:loan_id] }
+    return unless params[:loan_id].nil?
 
-      if @selected_loan.nil?
-        @selected_loan = @list_of_loans.first
-      end
-    end
+    @selected_loan = @list_of_loans.detect { |loan| String(loan.id) == params[:loan_id] }
+
+    @selected_loan = @list_of_loans.first if @selected_loan.nil?
   end
 
   # GET /payments/1/edit
@@ -78,13 +78,27 @@ class PaymentsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_payment
-      @payment = Payment.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def payment_params
-      params.require(:payment).permit(:payment_amount, :date, :description, :loan_id)
+  def set_payment
+    @payment = Payment.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    respond_to do |format|
+      format.html { redirect_to payments_path, notice: 'Permission denied.' }
+      format.json { head :forbidden }
     end
+  end
+
+  # Only allow a list of trusted parameters through.
+  def payment_params
+    params.require(:payment).permit(:payment_amount, :date, :description, :loan_id)
+  end
+
+  def check_access_privilege
+    return if @payment.loan.person.user == current_user
+
+    respond_to do |format|
+      format.html { redirect_to home_dashboard_path, notice: 'Access denied.' }
+      format.json { header :forbidden }
+    end
+  end
 end

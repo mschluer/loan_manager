@@ -2,4 +2,7 @@
 
 <%= render 'form', payment: @payment %>
 
-<%= link_to 'Back', payments_path %>
+<% if !params[:loan_id].nil? %>
+  <%= link_to 'Back', loan_path(params[:loan_id]) %> |
+<% end %>
+<%= link_to 'Back to all Payments', payments_path %>

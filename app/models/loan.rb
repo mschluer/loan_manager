@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Loan < ApplicationRecord
   validates :name, presence: true
   validates :total_amount, presence: true
@@ -19,9 +21,9 @@ class Loan < ApplicationRecord
 
   def days_open
     if balance != 0
-      DateTime.now.mjd - self.date.mjd
+      DateTime.now.mjd - date.mjd
     else
-      self.payments.last.date.mjd - self.date.mjd
+      payments.last.date.mjd - date.mjd
     end
   end
 end

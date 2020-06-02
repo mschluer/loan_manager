@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class LoansController < ApplicationController
-  before_action :set_loan, only: [:show, :edit, :update, :destroy]
-  before_action :check_access_privilege, only: [:show, :edit, :update, :destroy]
+  before_action :set_loan, only: %i[show edit update destroy]
+  before_action :check_access_privilege, only: %i[show edit update destroy]
 
   # GET /loans
   # GET /loans.json
@@ -11,8 +13,7 @@ class LoansController < ApplicationController
 
   # GET /loans/1
   # GET /loans/1.json
-  def show
-  end
+  def show; end
 
   # GET /loans/new
   def new
@@ -33,9 +34,7 @@ class LoansController < ApplicationController
   def create
     @loan = Loan.new(loan_params)
 
-    if params[:loan][:sign] == "negative"
-      @loan.total_amount *= -1
-    end
+    @loan.total_amount *= -1 if params[:loan][:sign] == 'negative'
 
     respond_to do |format|
       if @loan.save
@@ -77,6 +76,11 @@ class LoansController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_loan
     @loan = Loan.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    respond_to do |format|
+      format.html { redirect_to loans_url, notice: 'Access denied.' }
+      format.json { head :forbidden }
+    end
   end
 
   # Only allow a list of trusted parameters through.
@@ -85,11 +89,11 @@ class LoansController < ApplicationController
   end
 
   def check_access_privilege
-    if @loan.person.user != current_user
-      respond_to do |format|
-        format.html { redirect_to home_dashboard_path, notice: 'Loan not accessible for this User' }
-        format.json { header :forbidden }
-      end
+    return if @loan.person.user == current_user
+
+    respond_to do |format|
+      format.html { redirect_to home_dashboard_path, notice: 'Loan not accessible for this User' }
+      format.json { header :forbidden }
     end
   end
 end

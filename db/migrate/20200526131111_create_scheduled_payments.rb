@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Introduces scheduled payments
 class CreateScheduledPayments < ActiveRecord::Migration[6.0]
   def change
     create_table :scheduled_payments do |t|

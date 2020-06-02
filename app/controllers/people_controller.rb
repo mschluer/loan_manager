@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class PeopleController < ApplicationController
-  before_action :set_person, only: [:show, :edit, :update, :destroy]
-  before_action :check_access_privilege, only: [:show, :edit, :update, :destroy]
+  before_action :set_person, only: %i[show edit update destroy]
+  before_action :check_access_privilege, only: %i[show edit update destroy]
 
   # GET /people
   # GET /people.json
@@ -10,8 +12,7 @@ class PeopleController < ApplicationController
 
   # GET /people/1
   # GET /people/1.json
-  def show
-  end
+  def show; end
 
   # GET /people/new
   def new
@@ -19,8 +20,7 @@ class PeopleController < ApplicationController
   end
 
   # GET /people/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /people
   # POST /people.json
@@ -65,9 +65,13 @@ class PeopleController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_person
     @person = Person.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    respond_to do |format|
+      format.html { redirect_to people_url, notice: 'Access Denied.' }
+      format.json { head :forbidden }
+    end
   end
 
   # Only allow a list of trusted parameters through.
@@ -76,11 +80,11 @@ class PeopleController < ApplicationController
   end
 
   def check_access_privilege
-    if @person.user != current_user
-      respond_to do |format|
-        format.html { redirect_to home_dashboard_path, notice: 'Person not accessible for this User' }
-        format.json { header :forbidden }
-      end
+    return if @person.user == current_user
+
+    respond_to do |format|
+      format.html { redirect_to home_dashboard_path, notice: 'Person not accessible for this User' }
+      format.json { header :forbidden }
     end
   end
 end

@@ -1,29 +1,27 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "loans/show", type: :view do
+RSpec.describe 'loans/show', type: :view do
   before(:each) do
-    @person = create(:person)
-
-    @loan = assign(:loan, Loan.create!(
-        name: "MyString",
-        total_amount: 2.5,
-        description: "MyText",
-        date: '2020-04-09',
-        person_id: @person.id
-    ))
+    @loan = assign(:loan, create(:loan,
+                                 name: 'loan_name',
+                                 total_amount: 2.5,
+                                 description: 'loan_description',
+                                 date: '2020-04-09'))
   end
 
-  it "renders the page correctly" do
+  it 'renders the page correctly' do
     create(:payment, loan: @loan, description: 'payment_', payment_amount: 11.1)
     create(:scheduled_payment, loan: @loan, description: 'scheduled_payment_', payment_amount: 22.2)
 
     render
-    expect(rendered).to match(/MyString/)
+    expect(rendered).to match(/loan_name/)
     expect(rendered).to match(/2.5/)
-    expect(rendered).to match(/MyText/)
+    expect(rendered).to match(/loan_description/)
     expect(rendered).to match(/2020-04-09/)
-    expect(rendered).to match(/#{ERB::Util.html_escape @person.full_name}/)
-    expect(rendered).to match(/#{ERB::Util.html_escape @person.user.username}/)
+    expect(rendered).to match(/#{ERB::Util.html_escape @loan.person.full_name}/)
+    expect(rendered).to match(/#{ERB::Util.html_escape @loan.person.user.username}/)
 
     expect(rendered).to match(/Account Statement/)
     expect(rendered).to match(/payment_/)

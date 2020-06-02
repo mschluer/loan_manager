@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   has_secure_password
 
@@ -7,7 +9,7 @@ class User < ApplicationRecord
   has_many :people, foreign_key: 'user_id', class_name: 'Person', dependent: :destroy
 
   def switch_admin_access!
-    self.admin = !self.admin
+    self.admin = !admin
     save!
   end
 end
