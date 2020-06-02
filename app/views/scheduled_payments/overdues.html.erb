@@ -19,6 +19,8 @@
         <td><%= scheduled_payment.description %></td>
         <td><%= scheduled_payment.payment_amount %></td>
         <td><%= link_to 'Check', check_scheduled_payment_path(scheduled_payment) %></td>
+        <td><%= link_to 'Edit', edit_scheduled_payment_path(scheduled_payment) %></td>
+        <td><%= link_to 'Delete', scheduled_payment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </table>

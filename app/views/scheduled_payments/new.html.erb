@@ -2,4 +2,7 @@
 
 <%= render 'form', scheduled_payment: @scheduled_payment %>
 
-<%= link_to 'Back', scheduled_payments_path %>
+<% if !params[:loan_id].nil? %>
+  <%= link_to 'Back', loan_path(params[:loan_id]) %> |
+<% end %>
+<%= link_to 'Back to all scheduled payments', scheduled_payments_path %>
