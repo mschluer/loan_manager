@@ -2,6 +2,7 @@
 
 class PaymentsController < ApplicationController
   before_action :set_payment, only: %i[show edit update destroy]
+  before_action :check_access_privilege, only: %i[show edit update destroy]
 
   # GET /payments
   # GET /payments.json
@@ -80,10 +81,24 @@ class PaymentsController < ApplicationController
 
   def set_payment
     @payment = Payment.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    respond_to do |format|
+      format.html { redirect_to payments_path, notice: 'Permission denied.' }
+      format.json { head :forbidden }
+    end
   end
 
   # Only allow a list of trusted parameters through.
   def payment_params
     params.require(:payment).permit(:payment_amount, :date, :description, :loan_id)
+  end
+
+  def check_access_privilege
+    return if @payment.loan.person.user == current_user
+
+    respond_to do |format|
+      format.html { redirect_to home_dashboard_path, notice: 'Access denied.' }
+      format.json { header :forbidden }
+    end
   end
 end

@@ -2,6 +2,7 @@
 
 class ScheduledPaymentsController < ApplicationController
   before_action :set_scheduled_payment, only: %i[show edit update destroy check check_confirm]
+  before_action :check_access_privilege, only: %i[show edit update destroy]
 
   # GET /scheduled_payments
   # GET /scheduled_payments.json
@@ -104,10 +105,24 @@ class ScheduledPaymentsController < ApplicationController
 
   def set_scheduled_payment
     @scheduled_payment = ScheduledPayment.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    respond_to do |format|
+      format.html { redirect_to scheduled_payments_path, notice: 'Permission denied.' }
+      format.json { head :forbidden }
+    end
   end
 
   # Only allow a list of trusted parameters through.
   def scheduled_payment_params
     params.require(:scheduled_payment).permit(:payment_amount, :date, :description, :loan_id)
+  end
+
+  def check_access_privilege
+    return if @scheduled_payment.loan.person.user == current_user
+
+    respond_to do |format|
+      format.html { redirect_to home_dashboard_path, notice: 'Access denied.' }
+      format.json { header :forbidden }
+    end
   end
 end

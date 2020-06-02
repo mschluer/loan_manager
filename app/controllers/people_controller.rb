@@ -67,6 +67,11 @@ class PeopleController < ApplicationController
 
   def set_person
     @person = Person.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    respond_to do |format|
+      format.html { redirect_to people_url, notice: 'Access Denied.' }
+      format.json { head :forbidden }
+    end
   end
 
   # Only allow a list of trusted parameters through.

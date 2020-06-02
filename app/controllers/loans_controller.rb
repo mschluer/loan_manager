@@ -76,6 +76,11 @@ class LoansController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_loan
     @loan = Loan.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    respond_to do |format|
+      format.html { redirect_to loans_url, notice: 'Access denied.' }
+      format.json { head :forbidden }
+    end
   end
 
   # Only allow a list of trusted parameters through.
