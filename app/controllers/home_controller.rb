@@ -25,7 +25,7 @@ class HomeController < ApplicationController
     @active_and_positive_loans = []
 
     @loans.each do |loan|
-      next if loan.balance != 0
+      next if loan.balance.zero?
 
       @current_outstanding_balance += loan.balance
       if loan.balance.positive?
@@ -39,6 +39,8 @@ class HomeController < ApplicationController
     @paid_loans_amount = @loans.count - @active_loans_amount
 
     @most_recent_payments = Payment.where(loan_id: @loans).limit(10).order(id: :desc)
+
     @upcoming_payments = ScheduledPayment.where(loan_id: @loans).limit(10).order(date: :asc)
+    @overdue_upcoming_payments = @upcoming_payments.select(&:overdue?)
   end
 end

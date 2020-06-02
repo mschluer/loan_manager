@@ -7,9 +7,7 @@ class ScheduledPaymentsController < ApplicationController
   # GET /scheduled_payments
   # GET /scheduled_payments.json
   def index
-    list_of_person_ids = Person.where(user_id: current_user).pluck(:id)
-    list_of_loan_ids = Loan.where(person_id: list_of_person_ids).pluck(:id)
-    @scheduled_payments = ScheduledPayment.where(loan_id: list_of_loan_ids)
+    @scheduled_payments = fetch_scheduled_payments
   end
 
   # GET /scheduled_payments/1
@@ -101,6 +99,16 @@ class ScheduledPaymentsController < ApplicationController
     end
   end
 
+  # GET /scheduled_payments/overdues
+  def overdues
+    @scheduled_payments = fetch_scheduled_payments.select(&:overdue?)
+
+    respond_to do |format|
+      format.html { render :overdues }
+      format.json { @scheduled_payments }
+    end
+  end
+
   private
 
   def set_scheduled_payment
@@ -124,5 +132,11 @@ class ScheduledPaymentsController < ApplicationController
       format.html { redirect_to home_dashboard_path, notice: 'Access denied.' }
       format.json { header :forbidden }
     end
+  end
+
+  def fetch_scheduled_payments
+    list_of_person_ids = Person.where(user_id: current_user).pluck(:id)
+    list_of_loan_ids = Loan.where(person_id: list_of_person_ids).pluck(:id)
+    ScheduledPayment.where(loan_id: list_of_loan_ids)
   end
 end
