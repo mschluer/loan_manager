@@ -10,6 +10,6 @@ RUN apt-get update && apt-get install -y yarn
 
 RUN gem install bundler && bundle install
 RUN yarn install --check-files
-RUN bin/rake db:create && bin/rake db:migrate && bin/rake db:prepare
+RUN bin/rake db:create || bin/rake db:migrate && bin/rake db:prepare
 
 ENTRYPOINT ./entrypoint.sh
