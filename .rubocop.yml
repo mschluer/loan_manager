@@ -2,8 +2,10 @@ AllCops:
   Exclude:
     # The bundle file is of no concern for linting
     - 'bin/bundle'
+    # Linting Fixes can interfere with bin/rake
+    - 'bin/rake'
     # The schema file is generated and must not be changed anyways
-    - 'db/schema'
+    - 'db/schema.rb'
     # Third party libraries do not have to be checked
     - 'node_modules/**/*'
 
