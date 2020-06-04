@@ -29,6 +29,6 @@ class Person < ApplicationRecord
   end
 
   def total_balance
-    loans.sum &:balance
+    loans.sum(&:balance)
   end
 end

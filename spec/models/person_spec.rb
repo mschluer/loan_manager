@@ -67,14 +67,14 @@ RSpec.describe Person, type: :model do
       create(:loan, person: @person, total_amount: 20)
       create(:loan, person: @person, total_amount: 10)
 
-      expect(@person.total_balance).to eq 30
+      expect(@person.total_balance).to eq(30)
     end
 
     it 'returns a negative amount if balance is negative' do
       create(:loan, person: @person, total_amount: -20)
       create(:loan, person: @person, total_amount: -10)
 
-      expect(@person.total_balance).to eq -30
+      expect(@person.total_balance).to eq(-30)
     end
   end
 end
