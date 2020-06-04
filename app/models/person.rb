@@ -27,4 +27,8 @@ class Person < ApplicationRecord
       total / loans_size
     end
   end
+
+  def total_balance
+    loans.sum &:balance
+  end
 end
