@@ -32,4 +32,9 @@ Rails.application.routes.draw do
   get 'login', to: 'sessions#new', as: 'login'
   post 'sessions/create'
   get 'logout', to: 'sessions#destroy', as: 'logout'
+
+  # REST API
+  namespace :api do
+    post 'register', to: 'registration#register'
+  end
 end
