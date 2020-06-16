@@ -32,4 +32,10 @@ class User < ApplicationRecord
 
     false
   end
+
+  def kill_all_sessions
+    api_sessions.each do |session|
+      session.destroy
+    end
+  end
 end

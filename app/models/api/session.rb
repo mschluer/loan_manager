@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'securerandom'
+
 module Api
   class Session < ApplicationRecord
     belongs_to :user
@@ -10,6 +12,10 @@ module Api
 
     def expired?
       DateTime.now > expiry_date
+    end
+
+    def set_key
+      self.key = SecureRandom.hex
     end
   end
 end

@@ -2,6 +2,9 @@
 
 module Api
   class RegistrationController < Api::ApiBaseController
+    # It is allowed, that requests are submitted without user_id and session_key
+    skip_before_action :validate_session_params
+    # This endpoint is accessible even if logged out
     skip_before_action :authenticate_request
 
     # POST /api/register

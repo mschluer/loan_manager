@@ -36,5 +36,8 @@ Rails.application.routes.draw do
   # REST API
   namespace :api do
     post 'register', to: 'registration#register'
+    post 'login', to: 'login#login'
+    post 'logout', to: 'login#logout'
+    post 'logout_all', to: 'login#logout_all'
   end
 end

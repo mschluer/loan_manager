@@ -2,7 +2,17 @@
 
 module Api
   class ApiBaseController < ActionController::Base
+    # Global Before Actions
+    before_action :validate_session_params
+    before_action :authenticate_request
     skip_before_action :verify_authenticity_token
+
+    helper_method :validate_session_params
+    def validate_session_params
+      return if params.has_key?(:user_id) && params.has_key?(:session_key)
+
+      respond_with_forbidden
+    end
 
     helper_method :authenticate_request
     def authenticate_request
@@ -13,25 +23,23 @@ module Api
 
     helper_method :respond_with_forbidden
     def respond_with_forbidden
-      respond_to do |format|
-        format.html { render text: 'Not Found', status: 404 }
-        format.json { header :forbidden }
-      end
+      render json: {}, status: :forbidden
     end
 
-    # Global Before Actions
-    before_action :authenticate_request
+    helper_method :current_user
+    def current_user
+      User.find params[:user_id]
+    rescue ActiveRecord::RecordNotFound
+      respond_with_forbidden
+    end
 
     private
 
     def session_token_valid?
-      user = User.find params[:user_id]
-      return false unless user
+      return false unless user = current_user
 
       user.validate_sessions
-
-      session_key = params[:session_key]
-      user.session_with? session_key
+      user.session_with? params[:session_key]
     end
   end
 end
