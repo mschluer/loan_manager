@@ -39,5 +39,7 @@ Rails.application.routes.draw do
     post 'login', to: 'login#login'
     post 'logout', to: 'login#logout'
     post 'logout_all', to: 'login#logout_all'
+
+    resources :people, only: %i[create index show update destroy]
   end
 end

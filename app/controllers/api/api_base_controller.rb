@@ -26,6 +26,11 @@ module Api
       render json: {}, status: :forbidden
     end
 
+    helper_method :respond_with_bad_request
+    def respond_with_bad_request
+      render json: {}, status: :bad_request
+    end
+
     helper_method :current_user
     def current_user
       User.find params[:user_id]
