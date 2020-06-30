@@ -42,5 +42,7 @@ Rails.application.routes.draw do
 
     resources :people, only: %i[create index show update destroy]
     resources :loans, only: %i[create index show update destroy]
+    resources :payments, only: %i[create index show update destroy]
+    resources :scheduled_payments, only: %i[create index show update destroy]
   end
 end

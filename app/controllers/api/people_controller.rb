@@ -5,7 +5,7 @@ module Api
     before_action :set_person, only: %i[show update destroy]
     before_action :check_access_privilege, only: %i[show update destroy]
 
-    # POST /api/people
+    # GET /api/people
     def index
       render json: Person.where(user_id: current_user.id), status: :ok
     end
@@ -22,7 +22,7 @@ module Api
       end
     end
 
-    # POST /api/people/1
+    # GET /api/people/1
     def show
       render json: { person: @person, loans: @person.loans }, status: :ok
     end
