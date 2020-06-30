@@ -18,8 +18,9 @@ Metrics/AbcSize:
 Metrics/BlockLength:
   Exclude:
     # Excessive Block length is allowed in test files
-    - 'spec/**/*'
+    - 'config/routes.rb'
     - 'db/schema.rb'
+    - 'spec/**/*'
 
 Metrics/LineLength:
   Max: 120

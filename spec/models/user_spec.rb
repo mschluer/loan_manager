@@ -11,6 +11,22 @@ RSpec.describe User, type: :model do
     expect(@subject).to be_valid
   end
 
+  describe 'dependend' do
+    it 'deletes all depending people when deleted itself' do
+      person = create(:person, user: @subject)
+
+      @subject.destroy
+      expect { Person.find(person.id) }.to raise_exception(ActiveRecord::RecordNotFound)
+    end
+
+    it 'deletes all api_sessions when deleted itself' do
+      api_session = create(:api_session, user: @subject)
+
+      @subject.destroy
+      expect { Api::Session.find(api_session.id) }.to raise_exception(ActiveRecord::RecordNotFound)
+    end
+  end
+
   context 'Validations' do
     context 'Email' do
       it 'is only valid with an email-address' do

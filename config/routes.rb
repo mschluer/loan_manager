@@ -32,4 +32,17 @@ Rails.application.routes.draw do
   get 'login', to: 'sessions#new', as: 'login'
   post 'sessions/create'
   get 'logout', to: 'sessions#destroy', as: 'logout'
+
+  # REST API
+  namespace :api do
+    post 'register', to: 'registration#register'
+    post 'login', to: 'login#login'
+    post 'logout', to: 'login#logout'
+    post 'logout_all', to: 'login#logout_all'
+
+    resources :people, only: %i[create index show update destroy]
+    resources :loans, only: %i[create index show update destroy]
+    resources :payments, only: %i[create index show update destroy]
+    resources :scheduled_payments, only: %i[create index show update destroy]
+  end
 end
