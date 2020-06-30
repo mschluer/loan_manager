@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_26_131111) do
+ActiveRecord::Schema.define(version: 2020_06_15_113627) do
+
+  create_table "api_sessions", force: :cascade do |t|
+    t.string "key"
+    t.date "expiry_date"
+    t.integer "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "loans", force: :cascade do |t|
     t.string "name"
