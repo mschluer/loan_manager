@@ -2,22 +2,23 @@
 
 require 'rails_helper'
 
-RSpec.describe '/api/people', type: :request do
+RSpec.describe '/api/loans', type: :request do
   let(:valid_attributes) do
     {
-      first_name: 'FirstName',
-      last_name: 'LastName',
-      phone_number: '+49 170 1234 1234',
-      user_id: 3
+      name: 'valid name',
+      total_amount: 5.0,
+      date: 1.day.ago,
+      description: 'valid description',
+      person_id: 2
     }
   end
 
   let(:invalid_attributes) do
     {
-      first_name: '',
-      last_name: '',
-      phone_number: '',
-      user_id: nil
+      name: nil,
+      total_amount: nil,
+      date: nil,
+      description: nil
     }
   end
 
@@ -27,22 +28,22 @@ RSpec.describe '/api/people', type: :request do
     end
 
     describe 'index' do
-      it 'shows the users persons' do
-        get '/api/people/',
+      it 'shows the persons loans' do
+        get '/api/loans/',
             params: {
               user_id: 3,
               session_key: @session.key
             }
 
         expect(response).to be_successful
-        expect(JSON.parse(response.body).size).to eq 4
+        expect(JSON.parse(response.body).size).to eq 7
       end
     end
 
     describe 'create' do
-      it 'creates a person' do
+      it 'creates a loan' do
         expect do
-          post '/api/people',
+          post '/api/loans',
                params: {
                  user_id: 3,
                  session_key: @session.key,
@@ -50,12 +51,12 @@ RSpec.describe '/api/people', type: :request do
                }
 
           expect(response).to be_successful
-        end.to change(Person, :count).by 1
+        end.to change(Loan, :count).by 1
       end
 
-      it 'does not create a user with invalid params' do
+      it 'does not create a loan with invalid params' do
         expect do
-          post '/api/people',
+          post '/api/loans',
                params: {
                  user_id: 3,
                  session_key: @session.key,
@@ -63,13 +64,13 @@ RSpec.describe '/api/people', type: :request do
                }
 
           expect(response).to have_http_status 400
-        end.not_to change(Person, :count)
+        end.not_to change(Loan, :count)
       end
     end
 
     describe 'show' do
-      it 'shows the person with its loans' do
-        get '/api/people/2',
+      it 'shows the loan with its payments' do
+        get '/api/loans/2',
             params: {
               user_id: 3,
               session_key: @session.key
@@ -77,11 +78,11 @@ RSpec.describe '/api/people', type: :request do
 
         expect(response).to be_successful
 
-        expect(JSON.parse(response.body)['loans'].size).to eq 1
+        expect(JSON.parse(response.body)['payments'].size).to eq 3
       end
 
-      it 'does not show persons of other users' do
-        get '/api/people/3',
+      it 'does not show loans of other users' do
+        get '/api/loans/1',
             params: {
               user_id: 3,
               session_key: @session.key
@@ -90,8 +91,8 @@ RSpec.describe '/api/people', type: :request do
         expect(response).to have_http_status 403
       end
 
-      it 'shows forbidden if the person does not exist' do
-        get '/api/people/-1',
+      it 'shows forbidden if the loan does not exist' do
+        get '/api/loans/-1',
             params: {
               user_id: 3,
               session_key: @session.key
@@ -104,15 +105,16 @@ RSpec.describe '/api/people', type: :request do
     describe 'update' do
       let(:updated_attributes) do
         {
-          first_name: 'changed_first',
-          last_name: 'changed_last',
-          phone_number: '+49 432 4321 4321',
-          user_id: 3
+          name: 'updated name',
+          total_amount: 10.0,
+          date: 2.days.ago,
+          description: 'updated description',
+          person_id: 2
         }
       end
 
-      it 'updates the person' do
-        patch '/api/people/2',
+      it 'updates the loan' do
+        patch '/api/loans/2',
               params: {
                 user_id: 3,
                 session_key: @session.key,
@@ -121,15 +123,15 @@ RSpec.describe '/api/people', type: :request do
 
         expect(response).to be_successful
 
-        person = Person.find(2)
-        expect(person.first_name).to eq 'changed_first'
-        expect(person.last_name).to eq 'changed_last'
-        expect(person.phone_number).to eq '+49 432 4321 4321'
+        loan = Loan.find(2)
+        expect(loan.name).to eq 'updated name'
+        expect(loan.total_amount).to eq 10.0
+        expect(loan.description).to eq 'updated description'
       end
 
-      it 'does not update persons of other users' do
+      it 'does not update loans of other users' do
         expect do
-          patch '/api/people/3',
+          patch '/api/loans/3',
                 params: {
                   user_id: 3,
                   session_key: @session.key,
@@ -137,11 +139,11 @@ RSpec.describe '/api/people', type: :request do
                 }
 
           expect(response).to have_http_status 403
-        end.not_to change(Person.find(3), :first_name)
+        end.not_to change(Loan.find(3), :name)
       end
 
-      it 'shows forbidden if the person does not exist' do
-        patch '/api/people/-1',
+      it 'shows forbidden if the loan does not exist' do
+        patch '/api/loans/-1',
               params: {
                 user_id: 3,
                 session_key: @session.key,
@@ -153,83 +155,83 @@ RSpec.describe '/api/people', type: :request do
     end
 
     describe 'destroy' do
-      it 'destroys the person' do
+      it 'destroys the loan' do
         expect do
-          delete '/api/people/2',
+          delete '/api/loans/2',
                  params: {
                    user_id: 3,
                    session_key: @session.key
                  }
 
           expect(response).to be_successful
-        end.to change(Person, :count).by(-1)
+        end.to change(Loan, :count).by(-1)
       end
 
-      it 'does not destroy persons of other users' do
+      it 'does not destroy loans of other users' do
         expect do
-          delete '/api/people/3',
+          delete '/api/loans/3',
                  params: {
                    user_id: 3,
                    session_key: @session.key
                  }
 
           expect(response).to have_http_status 403
-        end.not_to change(Person, :count)
+        end.not_to change(Loan, :count)
       end
 
-      it 'shows forbidden if the person does not exist' do
+      it 'shows forbidden if the loan does not exist' do
         expect do
-          delete '/api/people/-1',
+          delete '/api/loans/-1',
                  params: {
                    user_id: 3,
                    session_key: @session.key
                  }
           expect(response).to have_http_status 403
-        end.not_to change(Person, :count)
+        end.not_to change(Loan, :count)
       end
     end
   end
 
   context 'Logged Out' do
     it 'index is locked' do
-      get '/api/people'
+      get '/api/loans'
       expect(response).to have_http_status 403
     end
 
     it 'create is locked' do
       expect do
-        get '/api/people',
+        get '/api/loans',
             params: {
               payload: valid_attributes
             }
 
         expect(response).to have_http_status 403
-      end.not_to change(Person, :count)
+      end.not_to change(Loan, :count)
     end
 
     it 'show is locked' do
-      get '/api/people/1'
+      get '/api/loans/1'
       expect(response).to have_http_status 403
     end
 
     it 'update is locked' do
       expect do
-        patch '/api/people/1',
+        patch '/api/loans/1',
               params: {
                 payload: valid_attributes
               }
 
         expect(response).to have_http_status 403
-      end.not_to change(Person.find(1), :first_name)
+      end.not_to change(Loan.find(1), :name)
     end
 
     it 'destroy is locked' do
       expect do
-        delete '/api/people/1',
+        delete '/api/loans/1',
                params: {}
 
         expect(response).to have_http_status 403
-      end.not_to change(Person, :count)
+      end.not_to change(Loan, :count)
     end
   end
 end

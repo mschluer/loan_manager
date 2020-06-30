@@ -105,9 +105,9 @@ RSpec.describe 'Api::Login', type: :request do
         expect do
           post '/api/logout',
                params: {
-                   user_id: user.id,
-                   session_key: other_session.key,
-                   payload: {}
+                 user_id: user.id,
+                 session_key: other_session.key,
+                 payload: {}
                }
 
           expect(response).not_to be_successful
@@ -116,9 +116,9 @@ RSpec.describe 'Api::Login', type: :request do
         expect do
           post '/api/logout',
                params: {
-                   user_id: user.id,
-                   session_key: @session.key,
-                   payload: {}
+                 user_id: user.id,
+                 session_key: @session.key,
+                 payload: {}
                }
 
           expect(response).to be_successful
@@ -135,9 +135,9 @@ RSpec.describe 'Api::Login', type: :request do
         expect do
           post '/api/logout_all',
                params: {
-                   user_id: user.id,
-                   session_key: @session.key,
-                   payload: {}
+                 user_id: user.id,
+                 session_key: @session.key,
+                 payload: {}
                }
 
           expect(response).to be_successful
@@ -148,9 +148,9 @@ RSpec.describe 'Api::Login', type: :request do
         expect do
           post '/api/logout_all',
                params: {
-                   user_id: user.id,
-                   session_key: @second_session.key,
-                   payload: {}
+                 user_id: user.id,
+                 session_key: @second_session.key,
+                 payload: {}
                }
 
           expect(response).to be_successful
@@ -161,8 +161,8 @@ RSpec.describe 'Api::Login', type: :request do
         expect do
           post '/api/logout_all',
                params: {
-                   user_id: user.id,
-                   payload: {}
+                 user_id: user.id,
+                 payload: {}
                }
 
           expect(response).not_to be_successful
@@ -173,8 +173,8 @@ RSpec.describe 'Api::Login', type: :request do
         expect do
           post '/api/logout_all',
                params: {
-                   session_key: @session.key,
-                   payload: {}
+                 session_key: @session.key,
+                 payload: {}
                }
 
           expect(response).not_to be_successful

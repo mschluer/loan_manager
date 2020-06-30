@@ -9,7 +9,7 @@ module Api
 
     helper_method :validate_session_params
     def validate_session_params
-      return if params.has_key?(:user_id) && params.has_key?(:session_key)
+      return if params.key?(:user_id) && params.key?(:session_key)
 
       respond_with_forbidden
     end
@@ -41,7 +41,7 @@ module Api
     private
 
     def session_token_valid?
-      return false unless user = current_user
+      return false unless (user = current_user)
 
       user.validate_sessions
       user.session_with? params[:session_key]

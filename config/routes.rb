@@ -41,5 +41,6 @@ Rails.application.routes.draw do
     post 'logout_all', to: 'login#logout_all'
 
     resources :people, only: %i[create index show update destroy]
+    resources :loans, only: %i[create index show update destroy]
   end
 end

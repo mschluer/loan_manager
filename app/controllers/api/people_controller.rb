@@ -24,11 +24,7 @@ module Api
 
     # POST /api/people/1
     def show
-      render json: {
-                     person: @person,
-                     loans: @person.loans
-                   },
-                   status: :ok
+      render json: { person: @person, loans: @person.loans }, status: :ok
     end
 
     # PATCH/PUT /api/people/1

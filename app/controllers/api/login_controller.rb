@@ -15,13 +15,13 @@ module Api
         return
       end
 
-      session = Api::Session.new({ user_id: user.id, expiry_date: 1.day.from_now})
+      session = Api::Session.new(user_id: user.id, expiry_date: 1.day.from_now)
       session.set_key
 
       if session.save
         render json: {
-            user_id: user.id,
-            session_key: session.key
+          user_id: user.id,
+          session_key: session.key
         }, status: :ok
       else
         render json: {}, status: :unprocessable_entity
