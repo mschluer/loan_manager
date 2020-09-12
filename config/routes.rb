@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-
   get 'settings/index'
   get 'legal/disclaimer'
   get 'legal/privacy'

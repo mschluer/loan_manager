@@ -169,14 +169,16 @@ RSpec.describe '/scheduled_payments', type: :request do
 
         post check_confirm_scheduled_payment_url(scheduled_payment),
              params: {
-                 scheduled_payment: {
-                     payment_amount: scheduled_payment.payment_amount,
-                     date: scheduled_payment.date,
-                     description: scheduled_payment.description,
-                     loan_id: scheduled_payment.loan_id } }
+               scheduled_payment: {
+                 payment_amount: scheduled_payment.payment_amount,
+                 date: scheduled_payment.date,
+                 description: scheduled_payment.description,
+                 loan_id: scheduled_payment.loan_id
+               }
+             }
 
-        expect(Payment.count).to eq (payment_count_before + 1)
-        expect(ScheduledPayment.count).to eq (scheduled_payment_count_before - 1)
+        expect(Payment.count).to eq payment_count_before + 1
+        expect(ScheduledPayment.count).to eq scheduled_payment_count_before - 1
       end
 
       it 'does not create a new payment nor removes the scheduled one if saving fails' do
@@ -187,11 +189,13 @@ RSpec.describe '/scheduled_payments', type: :request do
 
         post check_confirm_scheduled_payment_url(scheduled_payment),
              params: {
-                 scheduled_payment: {
-                     payment_amount: nil,
-                     date: nil,
-                     description: nil,
-                     loan_id: scheduled_payment.loan_id } }
+               scheduled_payment: {
+                 payment_amount: nil,
+                 date: nil,
+                 description: nil,
+                 loan_id: scheduled_payment.loan_id
+               }
+             }
 
         expect(Payment.count).to eq payment_count_before
         expect(ScheduledPayment.count).to eq scheduled_payment_count_before
@@ -283,11 +287,13 @@ RSpec.describe '/scheduled_payments', type: :request do
 
         post check_confirm_scheduled_payment_url(scheduled_payment),
              params: {
-                 scheduled_payment: {
-                     payment_amount: scheduled_payment.payment_amount,
-                     date: scheduled_payment.date,
-                     description: scheduled_payment.description,
-                     loan_id: scheduled_payment.loan_id } }
+               scheduled_payment: {
+                 payment_amount: scheduled_payment.payment_amount,
+                 date: scheduled_payment.date,
+                 description: scheduled_payment.description,
+                 loan_id: scheduled_payment.loan_id
+               }
+             }
         expect(response).to be_redirect
 
         expect(Payment.count).to eq payment_count_before
@@ -345,10 +351,12 @@ RSpec.describe '/scheduled_payments', type: :request do
         post check_confirm_scheduled_payment_url(scheduled_payment),
              params: {
                scheduled_payment: {
-                   payment_amount: scheduled_payment.payment_amount,
-                   date: scheduled_payment.date,
-                   description: scheduled_payment.description,
-                   loan_id: scheduled_payment.loan_id } }
+                 payment_amount: scheduled_payment.payment_amount,
+                 date: scheduled_payment.date,
+                 description: scheduled_payment.description,
+                 loan_id: scheduled_payment.loan_id
+               }
+             }
         expect(response).to be_redirect
 
         expect(Payment.count).to eq payment_count_before

@@ -80,7 +80,7 @@ RSpec.describe Person, type: :model do
 
   describe 'average_loan_duration_date' do
     it 'returns -1 if there are no loans' do
-      expect(create(:person).average_loan_duration_days).to eq -1
+      expect(create(:person).average_loan_duration_days).to eq(-1)
     end
 
     it 'returns the duration date if there is one loan' do
@@ -103,11 +103,11 @@ RSpec.describe Person, type: :model do
     it 'returns the average duration date if there are paid loans' do
       person = create(:person)
 
-      loan_1 = create(:loan, person: person, date: 4.days.ago, total_amount: -1)
-      loan_2 = create(:loan, person: person, date: 4.days.ago, total_amount: -2)
+      loan1 = create(:loan, person: person, date: 4.days.ago, total_amount: -1)
+      loan2 = create(:loan, person: person, date: 4.days.ago, total_amount: -2)
 
-      create(:payment, loan: loan_1, payment_amount: 1, date: 2.days.ago)
-      create(:payment, loan: loan_2, payment_amount: 2, date: 4.days.ago)
+      create(:payment, loan: loan1, payment_amount: 1, date: 2.days.ago)
+      create(:payment, loan: loan2, payment_amount: 2, date: 4.days.ago)
 
       expect(person.average_loan_duration_days).to eq 1
     end
