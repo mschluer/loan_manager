@@ -5,13 +5,10 @@ class ApplicationController < ActionController::Base
   def current_user
     return if session[:user_id].nil?
 
-    begin
-      @current_user ||= User.find(session[:user_id])
-    rescue ActiveRecord::RecordNotFound
-      session[:user_id] = nil
-      @current_user = nil
-      redirect_to home_index_path
-    end
+    @current_user ||= User.find(session[:user_id])
+  rescue ActiveRecord::RecordNotFound
+    session[:user_id] = nil
+    @current_user = nil
   end
 
   helper_method :redirect_to_index_if_not_logged_in

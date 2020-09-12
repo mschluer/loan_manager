@@ -47,4 +47,16 @@ RSpec.describe 'Sessions', type: :request do
       expect(session[:user_id]).to be_nil
     end
   end
+
+  describe 'Invalid Session' do
+    it 'signs the user off if the session is broken' do
+      user = create :user
+      post '/sessions/create', params: { username: user.username, password: user.password }
+      user.destroy!
+
+      get '/'
+
+      expect(session[:user_id]).to be_nil
+    end
+  end
 end

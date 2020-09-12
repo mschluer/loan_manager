@@ -83,7 +83,7 @@ class ScheduledPaymentsController < ApplicationController
     @payment = Payment.new(scheduled_payment_params)
 
     respond_to do |format|
-      if @payment.loan.person.user != current_user
+      if @payment.valid? && @payment.loan.person.user != current_user
         # Check Permission
         format.html { redirect_to home_dashboard_path, notice: 'Permission denied.' }
         format.json { head :forbidden }
