@@ -40,3 +40,6 @@ yarn-debug.log*
 
 # Ignore sitemap output
 /public/sitemap.xml.gz
+
+# Ignore Coverage Output
+coverage/*

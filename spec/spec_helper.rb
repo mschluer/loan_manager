@@ -2,6 +2,9 @@
 
 require 'database_cleaner/active_record'
 require 'faker'
+require 'simplecov'
+
+SimpleCov.start if ENV['COVERAGE'] == 'true'
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
