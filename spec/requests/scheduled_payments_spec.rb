@@ -159,6 +159,56 @@ RSpec.describe '/scheduled_payments', type: :request do
         expect { delete scheduled_payment_url(-1) }.not_to change(ScheduledPayment, :count)
       end
     end
+
+    describe 'POST /check_confirm' do
+      it 'creates a new payment and removes the scheduled one' do
+        scheduled_payment = ScheduledPayment.create! valid_attributes
+
+        payment_count_before = Payment.count
+        scheduled_payment_count_before = ScheduledPayment.count
+
+        post check_confirm_scheduled_payment_url(scheduled_payment),
+             params: {
+                 scheduled_payment: {
+                     payment_amount: scheduled_payment.payment_amount,
+                     date: scheduled_payment.date,
+                     description: scheduled_payment.description,
+                     loan_id: scheduled_payment.loan_id } }
+
+        expect(Payment.count).to eq (payment_count_before + 1)
+        expect(ScheduledPayment.count).to eq (scheduled_payment_count_before - 1)
+      end
+
+      it 'does not create a new payment nor removes the scheduled one if saving fails' do
+        scheduled_payment = create(:scheduled_payment)
+
+        payment_count_before = Payment.count
+        scheduled_payment_count_before = ScheduledPayment.count
+
+        post check_confirm_scheduled_payment_url(scheduled_payment),
+             params: {
+                 scheduled_payment: {
+                     payment_amount: nil,
+                     date: nil,
+                     description: nil,
+                     loan_id: scheduled_payment.loan_id } }
+
+        expect(Payment.count).to eq payment_count_before
+        expect(ScheduledPayment.count).to eq scheduled_payment_count_before
+      end
+    end
+
+    describe 'GET overdues' do
+      it 'returns the overdue scheduled payments' do
+        get scheduled_payments_overdues_url
+        expect(response).to be_successful
+      end
+
+      it 'shows an empty result if there are no overdue scheduled payments' do
+        get scheduled_payments_overdues_url
+        expect(response).to be_successful
+      end
+    end
   end
 
   context 'Logged out' do
@@ -223,6 +273,34 @@ RSpec.describe '/scheduled_payments', type: :request do
         end.not_to change(ScheduledPayment, :count)
       end
     end
+
+    describe 'POST check_confirm' do
+      it 'redirects to home#dashboard if user is not logged in' do
+        scheduled_payment = create(:scheduled_payment)
+
+        payment_count_before = Payment.count
+        scheduled_payment_count_before = ScheduledPayment.count
+
+        post check_confirm_scheduled_payment_url(scheduled_payment),
+             params: {
+                 scheduled_payment: {
+                     payment_amount: scheduled_payment.payment_amount,
+                     date: scheduled_payment.date,
+                     description: scheduled_payment.description,
+                     loan_id: scheduled_payment.loan_id } }
+        expect(response).to be_redirect
+
+        expect(Payment.count).to eq payment_count_before
+        expect(ScheduledPayment.count).to eq scheduled_payment_count_before
+      end
+    end
+
+    describe 'GET overdues' do
+      it 'redirects to home#dashboard is user is not logged in' do
+        get scheduled_payments_overdues_url
+        expect(response).to be_redirect
+      end
+    end
   end
 
   context 'Other user' do
@@ -254,6 +332,27 @@ RSpec.describe '/scheduled_payments', type: :request do
         end.not_to change(ScheduledPayment, :count)
 
         expect(ScheduledPayment.find(@scheduled_payment.id)).not_to be_nil
+      end
+    end
+
+    describe 'POST check_confirm' do
+      it 'redirects back to home#dashboard if user tries to check_confirm scheduled payments for other users' do
+        scheduled_payment = create(:scheduled_payment)
+
+        payment_count_before = Payment.count
+        scheduled_payment_count_before = ScheduledPayment.count
+
+        post check_confirm_scheduled_payment_url(scheduled_payment),
+             params: {
+               scheduled_payment: {
+                   payment_amount: scheduled_payment.payment_amount,
+                   date: scheduled_payment.date,
+                   description: scheduled_payment.description,
+                   loan_id: scheduled_payment.loan_id } }
+        expect(response).to be_redirect
+
+        expect(Payment.count).to eq payment_count_before
+        expect(ScheduledPayment.count).to eq scheduled_payment_count_before
       end
     end
   end
